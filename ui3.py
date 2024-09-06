@@ -69,8 +69,6 @@ class Ui_MainWindow(object):
         self.Login = QCheckBox(self.widget)
         self.Login.setObjectName(u"Login")
 
-        self.Login.setEnabled(False) # added manually
-
         self.horizontalLayout.addWidget(self.Login)
 
         self.LaunchApp = QCheckBox(self.widget)
@@ -84,10 +82,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.SkipTrailer)
 
-        self.SkipGacha = QCheckBox(self.widget)
-        self.SkipGacha.setObjectName(u"SkipGacha")
+        self.notSkipGacha = QCheckBox(self.widget)
+        self.notSkipGacha.setObjectName(u"notSkipGacha")
 
-        self.horizontalLayout.addWidget(self.SkipGacha)
+        self.horizontalLayout.addWidget(self.notSkipGacha)
 
 
         self.verticalLayout_6.addLayout(self.horizontalLayout)
@@ -180,7 +178,7 @@ class Ui_MainWindow(object):
         self.targetComboBox.setSizePolicy(sizePolicy2)
         self.targetComboBox.setMinimumSize(QSize(200, 0))
         
-        self.targetComboBox.setCurrentIndex(5) # added manually
+        self.targetComboBox.currentIndexChanged.connect(self.onTargetChange)
 
         self.TargetLayout.addWidget(self.targetComboBox)
 
@@ -337,6 +335,10 @@ class Ui_MainWindow(object):
 
         QMetaObject.connectSlotsByName(MainWindow)
 
+        self.Login.setEnabled(False) # added manually
+        self.SkipTrailer.setEnabled(False) # added manually
+        self.notSkipGacha.setEnabled(False) # added manually
+
         self.tokiAuto.setChecked(True)  # added manually
         self.LaunchApp.setChecked(True) # added manually
         self.LaunchApp.setChecked(True) # added manually
@@ -357,7 +359,7 @@ class Ui_MainWindow(object):
         self.Login.setText(QCoreApplication.translate("MainWindow", u"\u30a2\u30ab\u30a6\u30f3\u30c8\u7d99\u627f", None))
         self.LaunchApp.setText(QCoreApplication.translate("MainWindow", u"\u30a2\u30d7\u30ea\u8d77\u52d5", None))
         self.SkipTrailer.setText(QCoreApplication.translate("MainWindow", u"\u65b0\u30b9\u30bf\u30a4\u30eb\u30b9\u30ad\u30c3\u30d7", None))
-        self.SkipGacha.setText(QCoreApplication.translate("MainWindow", u"\u4e00\u65e5\u4e00\u56de\u30ac\u30c1\u30e3", None))
+        self.notSkipGacha.setText(QCoreApplication.translate("MainWindow", u"\u4e00\u65e5\u4e00\u56de\u30ac\u30c1\u30e3", None))
         self.taskGroup.setTitle(QCoreApplication.translate("MainWindow", u"\u30db\u30fc\u30e0\u753b\u9762\u3042\u3068", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u9589\u3058\u308b\u524d", None))
         self.tokiAuto.setText(QCoreApplication.translate("MainWindow", u"\u6642\u306e\u4fee\u7df4\u5834", None))
@@ -418,7 +420,7 @@ class Ui_MainWindow(object):
             # self.Login.setChecked(True)
             # self.tokiAuto.setChecked(True)
             # self.SkipTrailer.setChecked(True)
-            # self.SkipGacha.setChecked(True)
+            # self.notSkipGacha.setChecked(True)
             # self.Sweep.setChecked(True)
             # self.targetComboBox.setCurrentIndex(1)
             # self.levelComboBox.setCurrentIndex(1)
@@ -431,6 +433,31 @@ class Ui_MainWindow(object):
         except FileNotFoundError:
             print("File not found. Please check the file path.")
 
+    def onTargetChange(self,index):
+        match index:
+            case index if 1<= index < 5:
+                self.levelComboBox.setMaxVisibleItems(6)
+                self.levelComboBox.setItemText(0,'Lv8')
+                self.levelComboBox.setItemText(1,'Lv9')
+                self.levelComboBox.setItemText(2,'Lv10')
+                self.levelComboBox.setItemText(3,'Lv11')
+            case 5:
+                self.levelComboBox.setMaxVisibleItems(4)
+                self.levelComboBox.setItemText(0,'Lv13')
+                self.levelComboBox.setItemText(1,'Lv14')
+                self.levelComboBox.setItemText(2,'Lv15')
+                self.levelComboBox.setItemText(3,'Lv16')
+                if self.levelComboBox.currentIndex()>3:
+                    self.levelComboBox.setCurrentIndex(3)
+            case index if 6<= index < 21:
+                self.levelComboBox.setMaxVisibleItems(4)
+                self.levelComboBox.setItemText(0,'Lv1')
+                self.levelComboBox.setItemText(1,'Lv2')
+                self.levelComboBox.setItemText(2,'Lv3')
+                self.levelComboBox.setItemText(3,'Lv4')
+                if self.levelComboBox.currentIndex()>3:
+                    self.levelComboBox.setCurrentIndex(3)
+
     def fullSequence(self):
         print('full sequence')
 
@@ -439,7 +466,7 @@ class Ui_MainWindow(object):
     
     def startSequence(self):
         print('startSequence')
-        autoHvbn.launchApplication()
+        autoHvbn.launchApplication(self.notSkipGacha.isChecked())
 
     def onlySweep(self):
         print('onlySweep')

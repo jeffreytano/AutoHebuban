@@ -27,8 +27,12 @@ autoRun = r'C:\Users\jeffr\Desktop\AutoHebuban\autoRun.png'
 endGame = r'C:\Users\jeffr\Desktop\AutoHebuban\endGame.png'
 skipButton = r'C:\Users\jeffr\Desktop\AutoHebuban\skip.png'
 notEnoughLife = r'C:\Users\jeffr\Desktop\AutoHebuban\notEnoughLife.png'
-useLifeStone = r'C:\Users\jeffr\Desktop\AutoHebuban\useLifeStone'
-dailyFree = r'C:\Users\jeffr\Desktop\AutoHebuban\dailyFree'
+useLifeStone = r'C:\Users\jeffr\Desktop\AutoHebuban\useLifeStone.png'
+dailyFree = r'C:\Users\jeffr\Desktop\AutoHebuban\dailyFree.png'
+dailyGachaConfirm = r'C:\Users\jeffr\Desktop\AutoHebuban\dailyGachaConfirm.png'
+okButtonDaily = r'C:\Users\jeffr\Desktop\AutoHebuban\okButtonDaily.png'
+auto1 = r'C:\Users\jeffr\Desktop\AutoHebuban\auto1.png'
+autoFull = r'C:\Users\jeffr\Desktop\AutoHebuban\autoFull.png'
 OrbBossItemPos = [[1516,445],[1517,607],[1523,776],[1523,914],[1526,850]]
 OrbBossLevelPos = [[1766,277],[1770,466],[1769,661],[1765,852]]
 detailPos = [[1521,366],[1517,529],[1523,690],[1631,856],[1526,473],[1513,640],[1535,813]]
@@ -60,11 +64,28 @@ def wait(waitTime = 0.5):
     else:
         time.sleep(waitTime)
 
-def handleBeforeHomePage():
+def dailyGacha():
+    pos = searchButton(dailyFree,0.7)
+    if pos is not None:
+        auto.click(pos)
+        searchButton(dailyGachaConfirm,0.7,1,True)
+        wait(4)
+        okButton = searchButton(okButtonDaily,0.7)
+        while not okButton:
+            wait(1)
+            auto.click(1,1)
+            okButton = searchButton(okButtonDaily,0.7)
+        auto.click(okButton)
+    else:
+        return False
+
+def handleBeforeHomePage(daily):
     inMainPage = False
     while not inMainPage:
         print(tryExitAutoRun(),' onExitAutoRun')
-        print(trySkipTrailer(),' onSkippingWhatever')
+        if daily:
+            print(dailyGacha(),' onDailyGacha')
+        print(trySkip(),' onSkippingWhatever')
         inMainPage = searchButton(button1,confidence=0.6)
         time.sleep(regularRetryInterval)
         auto.click(1,1) # incase missed to skip battle result
@@ -86,7 +107,7 @@ def turnEnd():
     auto.click(turnEndPos)
     time.sleep(1)
 
-def trySkipTrailer():
+def trySkip():
     pos = searchButton(skipButton,confidence=0.7)
     if pos is not None:
         auto.click(pos)
@@ -113,8 +134,8 @@ def teamSelection(TeamSlot = 1,Former = True):
     searchButton(sortieButton,0.7,1,True)
 
 def enterOrbBoss(Target,Color,Level):
-    searchButton(button1,confidence=0.6,retryAfter=regularRetryInterval,clickit=True)
-    searchButton(orbIcon,confidence=0.7,retryAfter=regularRetryInterval,clickit=True)
+    searchButton(button1,0.6,regularRetryInterval,True)
+    searchButton(orbIcon,0.7,regularRetryInterval,True)
     wait()
     match Target:
         case 0:
@@ -218,7 +239,10 @@ def battleInstruction(isAuto):
                 wait()
         file.close()
     else:
-        print('auto')
+        searchButton(turnEndButton,0.7,1)
+        searchButton(auto1,0.7,1,True)
+        wait()
+        searchButton(autoFull,0.7,1,True)
 
 class autoHvbn:
     def __init__(self):
@@ -232,7 +256,7 @@ class autoHvbn:
         self.clickSpecific(endGame,0.7,1)
         self.clickSpecific(OKButton,0.7,1)
 
-    def launchApplication():
+    def launchApplication(daily):
         cwd = os.getcwd()
         os.chdir(r'C:\Users\jeffr\Desktop')
         subprocess.call('ヘブンバーンズレッド.url', shell = True)
@@ -241,17 +265,16 @@ class autoHvbn:
         searchButton(titleMenu,confidence=0.9,retry=0.5)
         wait(1)
         auto.click(1000,800)
-        handleBeforeHomePage()
+        handleBeforeHomePage(daily)
 
     def enterBattleHandler(self,target,color,Level,time,instruction):
         counter = 0
         while counter <= time:
             if 0<target<=5:
-                self.enterJewel(target,Level)
+                enterJewel(target,Level)
             else:
-                self.enterOrbBoss(target,color,Level)
-            if not instruction == 1:
-                battleInstruction(isAuto)
+                enterOrbBoss(target,color,Level)
+            battleInstruction(not instruction)
             counter +=5
             pos = searchButton(battleResult,0.9,2)
             auto.click(pos)
