@@ -52,7 +52,12 @@ turnEndPos = [1752,885]
 regularRetryInterval = 0.5
 
 def wait(waitTime = 0.5):
-    time.sleep(waitTime)
+    if waitTime > 1:
+        for i in range(waitTime):
+            time.sleep(1)
+            print(i)
+    else:
+        time.sleep(waitTime)
 
 def clickSpecific(image,confidence,retryAfter=-1,secondary_image='',secondary_image_confidence=0.7):
     found = 0
@@ -313,4 +318,6 @@ while not pos:
     pos = searchButton(homeButton,0.9)
 auto.click(pos)
 searchButton(OKButton,0.7,1,clickit=True)
+
+# receive daily reward
 goAutoRun()

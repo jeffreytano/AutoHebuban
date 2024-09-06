@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'GUIprototype.ui'
-##
-## Created by: Qt User Interface Compiler version 6.7.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -16,14 +6,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QHBoxLayout,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
+    QMainWindow, QMenuBar, QPushButton, QSizePolicy, QLabel,
     QStatusBar, QTabWidget, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(199, 217)
+        # MainWindow.resize(199, 217)
+        self.startSequence = QLabel('起動シークエンス')
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
@@ -40,7 +31,7 @@ class Ui_MainWindow(object):
         self.Target.addItem("")
         self.Target.addItem("")
         self.Target.setObjectName(u"Target")
-
+        self.horizontalLayout.addWidget(self.startSequence)
         self.horizontalLayout.addWidget(self.Target)
 
         self.Color = QComboBox(self.tab)
@@ -129,7 +120,7 @@ class Ui_MainWindow(object):
 
         self.LaunchAppCheckBox.setText(QCoreApplication.translate("MainWindow", u"\u30a2\u30d7\u30ea\u8d77\u52d5", None))
         self.AutoTrainCheckBox.setText(QCoreApplication.translate("MainWindow", u"\u6642\u306e\u4fee\u7df4\u5834", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Tab 1", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"作業", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Tab 2", None))
         self.StartButton.setText(QCoreApplication.translate("MainWindow", u"Start", None))
     # retranslateUi

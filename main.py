@@ -1,6 +1,6 @@
 import sys
 from PySide6 import QtWidgets
-from GUIprototype import Ui_MainWindow
+from ui3 import Ui_MainWindow
 
 class MainUi(QtWidgets.QMainWindow):
     def __init__(self):
