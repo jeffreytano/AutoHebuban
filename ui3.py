@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
 
         self.LaunchApp = QCheckBox(self.widget)
         self.LaunchApp.setObjectName(u"LaunchApp")
-        self.LaunchApp.setChecked(True) # added manually
+
 
         self.horizontalLayout.addWidget(self.LaunchApp)
 
@@ -122,8 +122,6 @@ class Ui_MainWindow(object):
 
         self.AutoLayout.addWidget(self.doNoAuto)
 
-        self.tokiAuto.setChecked(True)
-
         self.widget2 = QWidget(self.taskGroup)
         self.widget2.setObjectName(u"widget2")
         self.widget2.setGeometry(QRect(20, 30, 481, 18))
@@ -150,7 +148,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.Sweep = QCheckBox(self.widget3)
         self.Sweep.setObjectName(u"Sweep")
-        self.Sweep.setChecked(True) # added manually
 
         self.verticalLayout.addWidget(self.Sweep)
 
@@ -235,6 +232,7 @@ class Ui_MainWindow(object):
         self.sweepTimeComboBox.addItem("")
         self.sweepTimeComboBox.addItem("")
         self.sweepTimeComboBox.addItem("")
+        self.sweepTimeComboBox.addItem("")
         self.sweepTimeComboBox.setObjectName(u"sweepTimeComboBox")
         sizePolicy2.setHeightForWidth(self.sweepTimeComboBox.sizePolicy().hasHeightForWidth())
         self.sweepTimeComboBox.setSizePolicy(sizePolicy2)
@@ -252,15 +250,15 @@ class Ui_MainWindow(object):
 
         self.BattleLayout.addWidget(self.BattleScript)
 
-        self.BattleInScriptSelect = QComboBox(self.widget3)
-        self.BattleInScriptSelect.addItem("Auto")
-        self.BattleInScriptSelect.addItem("Default")
-        self.BattleInScriptSelect.setObjectName(u"BattleInScriptSelect")
-        sizePolicy2.setHeightForWidth(self.BattleInScriptSelect.sizePolicy().hasHeightForWidth())
-        self.BattleInScriptSelect.setSizePolicy(sizePolicy2)
-        self.BattleInScriptSelect.setMinimumSize(QSize(200, 0))
+        self.battleInstruction = QComboBox(self.widget3)
+        self.battleInstruction.addItem("Auto")
+        self.battleInstruction.addItem("Default")
+        self.battleInstruction.setObjectName(u"battleInstruction")
+        sizePolicy2.setHeightForWidth(self.battleInstruction.sizePolicy().hasHeightForWidth())
+        self.battleInstruction.setSizePolicy(sizePolicy2)
+        self.battleInstruction.setMinimumSize(QSize(200, 0))
 
-        self.BattleLayout.addWidget(self.BattleInScriptSelect)
+        self.BattleLayout.addWidget(self.battleInstruction)
 
 
         self.verticalLayout.addLayout(self.BattleLayout)
@@ -273,13 +271,12 @@ class Ui_MainWindow(object):
         self.MissionLayout.setContentsMargins(0, 0, 0, 0)
         self.Daily = QCheckBox(self.widget4)
         self.Daily.setObjectName(u"Daily")
-        self.Daily.setChecked(True) # added manually
+
 
         self.MissionLayout.addWidget(self.Daily)
 
         self.Weekly = QCheckBox(self.widget4)
         self.Weekly.setObjectName(u"Weekly")
-        self.Weekly.setChecked(True) # added manually
 
         self.MissionLayout.addWidget(self.Weekly)
 
@@ -339,6 +336,17 @@ class Ui_MainWindow(object):
 
 
         QMetaObject.connectSlotsByName(MainWindow)
+
+        self.tokiAuto.setChecked(True)  # added manually
+        self.LaunchApp.setChecked(True) # added manually
+        self.LaunchApp.setChecked(True) # added manually
+        self.Daily.setChecked(True) # added manually
+        self.Weekly.setChecked(True) # added manually
+        self.Sweep.setChecked(True) # added manually
+        self.targetComboBox.setCurrentIndex(9)
+        self.levelComboBox.setCurrentIndex(3)
+
+        self.loadPreset()
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -376,18 +384,19 @@ class Ui_MainWindow(object):
         self.Level.setText(QCoreApplication.translate("MainWindow", u"\u30ec\u30d9\u30eb", None))
         self.sweepTime.setText(QCoreApplication.translate("MainWindow", u"\u56de\u6570", None))
         self.sweepTimeComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"\u3042\u308b\u3060\u3051", None))
-        self.sweepTimeComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"5", None))
-        self.sweepTimeComboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"10", None))
-        self.sweepTimeComboBox.setItemText(3, QCoreApplication.translate("MainWindow", u"15", None))
-        self.sweepTimeComboBox.setItemText(4, QCoreApplication.translate("MainWindow", u"20", None))
-        self.sweepTimeComboBox.setItemText(5, QCoreApplication.translate("MainWindow", u"25", None))
-        self.sweepTimeComboBox.setItemText(6, QCoreApplication.translate("MainWindow", u"30", None))
-        self.sweepTimeComboBox.setItemText(7, QCoreApplication.translate("MainWindow", u"35", None))
-        self.sweepTimeComboBox.setItemText(8, QCoreApplication.translate("MainWindow", u"40", None))
-        self.sweepTimeComboBox.setItemText(9, QCoreApplication.translate("MainWindow", u"45", None))
-        self.sweepTimeComboBox.setItemText(10, QCoreApplication.translate("MainWindow", u"50", None))
-        self.sweepTimeComboBox.setItemText(11, QCoreApplication.translate("MainWindow", u"55", None))
-        self.sweepTimeComboBox.setItemText(12, QCoreApplication.translate("MainWindow", u"60", None))
+        self.sweepTimeComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"3", None))
+        self.sweepTimeComboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"5", None))
+        self.sweepTimeComboBox.setItemText(3, QCoreApplication.translate("MainWindow", u"10", None))
+        self.sweepTimeComboBox.setItemText(4, QCoreApplication.translate("MainWindow", u"15", None))
+        self.sweepTimeComboBox.setItemText(5, QCoreApplication.translate("MainWindow", u"20", None))
+        self.sweepTimeComboBox.setItemText(6, QCoreApplication.translate("MainWindow", u"25", None))
+        self.sweepTimeComboBox.setItemText(7, QCoreApplication.translate("MainWindow", u"30", None))
+        self.sweepTimeComboBox.setItemText(8, QCoreApplication.translate("MainWindow", u"35", None))
+        self.sweepTimeComboBox.setItemText(9, QCoreApplication.translate("MainWindow", u"40", None))
+        self.sweepTimeComboBox.setItemText(10, QCoreApplication.translate("MainWindow", u"45", None))
+        self.sweepTimeComboBox.setItemText(11, QCoreApplication.translate("MainWindow", u"50", None))
+        self.sweepTimeComboBox.setItemText(12, QCoreApplication.translate("MainWindow", u"55", None))
+        self.sweepTimeComboBox.setItemText(13, QCoreApplication.translate("MainWindow", u"60", None))
 
         self.BattleScript.setText(QCoreApplication.translate("MainWindow", u"\u6226\u95d8\u6307\u793a", None))
         self.Daily.setText(QCoreApplication.translate("MainWindow", u"\u30c7\u30a4\u30ea\u30fc\u53d7\u3051\u53d6\u308a", None))
@@ -401,6 +410,27 @@ class Ui_MainWindow(object):
     # retranslateUi
 
     # manually added
+
+    def loadPreset(self):
+        try:
+            file = open('Preset.txt','r+')
+
+            # self.Login.setChecked(True)
+            # self.tokiAuto.setChecked(True)
+            # self.SkipTrailer.setChecked(True)
+            # self.SkipGacha.setChecked(True)
+            # self.Sweep.setChecked(True)
+            # self.targetComboBox.setCurrentIndex(1)
+            # self.levelComboBox.setCurrentIndex(1)
+            # self.sweepTimeComboBox.setCurrentIndex(1)
+            # self.battleInstruction.setCurrentIndex(1)
+            # self.Daily.setChecked(True)
+            # self.Weekly.setChecked(True)
+            # self.tokiAuto.setChecked(True)
+
+        except FileNotFoundError:
+            print("File not found. Please check the file path.")
+
     def fullSequence(self):
         print('full sequence')
 
@@ -414,5 +444,5 @@ class Ui_MainWindow(object):
     def onlySweep(self):
         print('onlySweep')
         targetIndex = self.targetComboBox.currentIndex()
-        autohvbn.enterBattleHandler(int(targetIndex/5)-1,targetIndex%5,self.levelComboBox.currentIndex()+1,self.sweepTimeComboBox.currentIndex(),self.BattleInScriptSelect.currentIndex())
+        autohvbn.enterBattleHandler(int(targetIndex/5)-1,targetIndex%5,self.levelComboBox.currentIndex()+1,self.sweepTimeComboBox.currentIndex(),self.battleInstruction.currentIndex())
             

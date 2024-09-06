@@ -28,6 +28,7 @@ endGame = r'C:\Users\jeffr\Desktop\AutoHebuban\endGame.png'
 skipButton = r'C:\Users\jeffr\Desktop\AutoHebuban\skip.png'
 notEnoughLife = r'C:\Users\jeffr\Desktop\AutoHebuban\notEnoughLife.png'
 useLifeStone = r'C:\Users\jeffr\Desktop\AutoHebuban\useLifeStone'
+dailyFree = r'C:\Users\jeffr\Desktop\AutoHebuban\dailyFree'
 OrbBossItemPos = [[1516,445],[1517,607],[1523,776],[1523,914],[1526,850]]
 OrbBossLevelPos = [[1766,277],[1770,466],[1769,661],[1765,852]]
 detailPos = [[1521,366],[1517,529],[1523,690],[1631,856],[1526,473],[1513,640],[1535,813]]
