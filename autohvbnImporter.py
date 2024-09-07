@@ -115,12 +115,14 @@ def dailyGacha():
     pos = searchButton(dailyFree,0.7)
     if pos is not None:
         auto.click(pos)
-        searchButton(dailyGachaConfirm,0.7,1,True)
+        # searchButton(dailyGachaConfirm,0.7,1,True)
+        wait()
+        press('enter')
         wait(4)
         okButton = searchButton(okButtonDaily,0.7)
         while not okButton:
             wait(1)
-            auto.click(1,1)
+            press('enter')
             okButton = searchButton(okButtonDaily,0.7)
         auto.click(okButton)
     else:
@@ -133,7 +135,7 @@ def handleBeforeHomePage(daily):
         if daily:
             print(dailyGacha(),' onDailyGacha')
         print(trySkip(),' onSkippingWhatever')
-        arenaBackButton = searchButton(arenaBack)
+        arenaBackButton = searchButton(arenaBack,0.7)
         if arenaBackButton:
             wait()
             auto.click(arenaBackButton)

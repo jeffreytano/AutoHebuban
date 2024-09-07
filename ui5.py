@@ -550,6 +550,8 @@ class Ui_MainWindow(object):
         self.SkipTrailer.setEnabled(False) # added manually
         self.notSkipGacha.setEnabled(False) # added manually
 
+        self.notSkipGacha.setChecked(True) # added manually
+
         self.tokiAuto.setChecked(True)  # added manually
         # self.LaunchApp.setChecked(True) # added manually
         self.formerTeam.setChecked(True)
