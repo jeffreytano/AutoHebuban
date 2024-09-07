@@ -533,6 +533,7 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
         
         self.levelComboBox.setMaxVisibleItems(6)
+        self.bunchanButton.clicked.connect(self.bunChanTraining)
         self.deleteButton.clicked.connect(self.deleteScript)
         self.fileComboBox.currentIndexChanged.connect(self.onFileBrowserChange)
         self.fileName.textChanged.connect(self.onFileNameChange)
@@ -824,7 +825,8 @@ class Ui_MainWindow(object):
         # self.process.join()
 
     def onlyClose(self):
-        params = [self.Daily.isChecked(),self.Weekly.isChecked(),self.tokiAuto.isChecked()]
+        autoRun = 0 if self.tokiAuto.isChecked() else 1 if self.arenaAuto.isChecked() else 2
+        params = [self.Daily.isChecked(),self.Weekly.isChecked(),autoRun]
         self.callFunctionWithMonitor(autohvbnImporter.closeProcess,params)
 
     def onlySweep(self):
@@ -927,5 +929,8 @@ class Ui_MainWindow(object):
         self.fileName.setText('')
         self.instructionEdit.setPlainText('')
         self.battleInstruction.removeItem(index+1)
+
+    def bunChanTraining(self):
+        self.callFunctionWithMonitor(autohvbnImporter.bunChan,[self.bunchanInput.value()])
 
             

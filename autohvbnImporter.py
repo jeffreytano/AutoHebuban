@@ -9,17 +9,14 @@ keyboard = Controller()
 
 titleMenu = 'titleMenu.png'
 end_training_image = 'AutoTrainEnd.png'
-button1 = 'button1.png'
+strengthen = 'strengthen.png'
 orbIcon = 'orb.png'
 JewelIcon = 'jewel.png'
-detailButton = 'detailButton.png'
 battleButton = 'battle.png'
 maxLifeButton = 'maxLife.png'
 OKButton = 'OK.png'
 sortieButton = 'sortie.png'
 formerTeamButton = 'formerteam.png'
-OKButton2 = 'OK2.png'
-orbBossChallButton = 'orbBossChall.png'
 homeButton = 'homeButton.png'
 turnEndButton = 'turnEnd.png'
 battleResult = 'battleResult.png'
@@ -34,22 +31,27 @@ useLifeStone = 'useLifeStone.png'
 dailyFree = 'dailyFree.png'
 dailyGachaConfirm = 'dailyGachaConfirm.png'
 okButtonDaily = 'okButtonDaily.png'
-auto1 = 'auto1.png'
-autoFull = 'autoFull.png'
 missionButton = 'missionButton.png'
 takeRewardButton = 'takeReward.png'
 backButton = 'backButton.png'
 weeklyButton = 'weeklyButton.png'
 takeRewardDisabled = 'takeRewardDisabled.png'
 maxLifeButton2 = 'maxLife2.png'
-OrbBossItemPos = [[1516,445],[1517,607],[1523,776],[1523,914],[1526,850]]
-OrbBossLevelPos = [[1766,277],[1770,466],[1769,661],[1765,852]]
+arenaButton = 'arenaButton.png'
+skipDialog = 'skipDialog.png'
+arenaYameru = 'arenaYameru.png'
+arenaBack = 'arenaBack.png'
+autoOn = 'autoOn.png'
+arenaForm = 'arenaForm.png'
+dialogAutoOff = 'dialogAutoOff.png'
+menu = 'menu.png'
+terminate = 'terminate.png'
 detailPos = [[1521,366],[1517,529],[1523,690],[1631,856],[1526,473],[1513,640],[1535,813]]
 BattleChar = [[168,882],[457,884],[747,879],[1017,887],[1256,884],[1501,874]]
 SkillSlot = [[1108,260],[1129,431],[1117,634],[1137,740]]
 teamPos = [[326,78],[390,78],[454,78],[523,78],[587,78],[678,78],[742,78],[808,78],[872,78],[939,78],[1028,78],[1093,78],[1159,78],[1225,78],[1290,78],[1378,78],[1446,78],[1510,78],[1576,78],[1641,78]]
-turnEndPos = [1752,885]
 regularRetryInterval = 0.5
+mainStoryPos = (831,937)
     
 def press(key,times = 1):
     key = str(key)
@@ -131,7 +133,14 @@ def handleBeforeHomePage(daily):
         if daily:
             print(dailyGacha(),' onDailyGacha')
         print(trySkip(),' onSkippingWhatever')
-        inMainPage = searchButton(button1,confidence=0.6)
+        arenaBackButton = searchButton(arenaBack)
+        if arenaBackButton:
+            wait()
+            auto.click(arenaBackButton)
+            wait(2)
+            if searchButton(dialogAutoOff,0.7):
+                press('r')
+        inMainPage = searchButton(strengthen,confidence=0.6)
         time.sleep(regularRetryInterval)
         press('enter') # incase missed to skip battle result
 
@@ -155,7 +164,6 @@ def switchPos(firstChr,SecondChr):
     # auto.click(BattleChar[SecondChr-1])
     
 def turnEnd():
-    # auto.click(turnEndPos)
     press('enter')
     time.sleep(1)
 
@@ -183,21 +191,27 @@ def teamSelection(TeamSlot = 0,Former = False):
     auto.click(teamPos[TeamSlot])
     wait()
     if Former:
-        searchButton(formerTeamButton,0.7,1,True)
-        searchButton(OKButton2,0.7,1,True)
-        wait(1)
-    searchButton(sortieButton,0.7,1,True)
+        # searchButton(formerTeamButton,0.7,1,True)
+        press('down')
+        press('right')
+        press('enter')
+        wait()
+        press('enter')
+        wait(2)
+    # searchButton(sortieButton,0.7,1,True)
+    press('down')
+    press('enter')
 
-def enterOrbBoss2(Level,useLife,ticket,refill,team,former):
+def enterOrbBoss2(level,useLife,ticket,refill,team,former):
     print('team ',team)
     auto.click(685,509)
     wait()
-    press('s',Level+1)
+    press('s',level+1)
     wait()
     press('enter')
     wait()
     press('enter')
-    if Level >= 3: # if level 4
+    if level >= 3: # if level 4
         wait()
         # searchButton(OKButton,0.7,1,True)
         press('enter')
@@ -240,8 +254,10 @@ def enterOrbBoss2(Level,useLife,ticket,refill,team,former):
     # auto.click()
     teamSelection(team,former)
 
-def enterOrbBoss(Target,Level,useLife,ticket,refill,team,former):
-    searchButton(button1,0.6,regularRetryInterval,True)
+def enterOrbBoss(Target,level,useLife,ticket,refill,team,former):
+    pos = searchButton(strengthen,0.6,regularRetryInterval)
+    wait()
+    auto.click(pos)
     searchButton(orbIcon,0.7,regularRetryInterval,True)
     wait()
 
@@ -258,12 +274,12 @@ def enterOrbBoss(Target,Level,useLife,ticket,refill,team,former):
 
     searchButton(homeButton,0.9,regularRetryInterval)
 
-    enterOrbBoss2(Level,useLife,ticket,refill,team,former)
+    enterOrbBoss2(level,useLife,ticket,refill,team,former)
 
-def enterJewel(Color,Level,resource,refill):
-    searchButton(button1,confidence=0.6,retry=regularRetryInterval,clickit=True)
-    searchButton(JewelIcon,confidence=0.7,retry=regularRetryInterval,clickit=True)
-
+def enterJewel(Color,level,useLife,ticket,refill,team,former):
+    searchButton(strengthen,confidence=0.6,retry=regularRetryInterval,clickit=True)
+    pos =searchButton(JewelIcon,confidence=0.8,retry=regularRetryInterval,clickit=True)
+    print(pos)
     wait()
 
     for i in range(Color+1):
@@ -283,7 +299,7 @@ def enterJewel(Color,Level,resource,refill):
 
     time.sleep(1)
 
-    for i in range(Level+1):
+    for i in range(level+1):
         print('press S')
         keyboard.press(Key.down)
         keyboard.release(Key.down)
@@ -299,13 +315,44 @@ def enterJewel(Color,Level,resource,refill):
     # auto.click(detailPos[Level])
 
     searchButton(battleButton,0.7,1,True)
-    searchButton(maxLifeButton,0.7,1,True)
-    searchButton(OKButton,0.7,1,True)
+    if ticket:
+        press('q')
+    if 0<useLife< 5:
+        wait()
+        press('d',useLife-1)
+    elif useLife == -1:
+        searchButton(maxLifeButton,0.7,1,True)
+    elif useLife <= 5:
+        pos = searchButton(maxLifeButton,0.7,1,True)
+        auto.click(pos)
+    if searchButton(notEnoughLife,0.7):
+        # searchButton(OKButton,0.7,1,True)
+        press('enter')
+        wait()
+        searchButton(useLifeStone,0.7,regularRetryInterval)
+        wait()
+        press('down',2)
+        match refill:
+            case 0:
+                press('right')
+                press('enter')
+            case 1:
+                press('enter')
+            case 2:
+                press('left')
+                press('enter')
+        # searchButton(OKButton,0.7,1,True)
+        wait(1)
+        press('enter')
+        wait(1)
+    press('enter')
+    # searchButton(maxLifeButton,0.7,1,True)
+    # searchButton(OKButton,0.7,1,True)
     # searchButton(formerTeamButton,0.7,1,True)
     # searchButton(OKButton2,0.7,1,True)
     # wait(1)
     # searchButton(sortieButton,0.7,1,True)
-    teamSelection(1,True)
+    teamSelection(team,former)
 
 def battleInstruction(txtName):
     if txtName != 'Auto':
@@ -323,6 +370,8 @@ def battleInstruction(txtName):
                     file.close()
                     return True
                 wait(1)
+                if searchButton(autoOn,0.9):
+                    press('r')
             commands = line.split()
             for command in commands:
                 SetSkill = re.search('^C[1-6]S[1-9]',command)
@@ -349,10 +398,11 @@ def battleInstruction(txtName):
         return True
     else:
         searchButton(turnEndButton,0.7,1)
-        #search if auto is already on
-        press('r')
+        autoIsOn = searchButton(autoOn,0.9)
+        if not autoIsOn:
+            press('r')
         while not searchButton(battleResult,0.9,):
-            if searchButton(homeButton,0.9):
+            if searchButton(homeButton,0.9) or searchButton(strengthen,0.9):
                 return False
             wait(2)
         return True
@@ -376,7 +426,7 @@ def launchApplication(daily):
 def closeProcess(daily,weekly,autoRun):
     print(daily,weekly)
     if daily or weekly:
-        searchButton(button1,0.7,1)
+        searchButton(strengthen,0.7,1)
         searchButton(missionButton,0.7,1,True)
         if daily:
             reward = searchButton(takeRewardButton,0.8)
@@ -407,26 +457,61 @@ def closeProcess(daily,weekly,autoRun):
                 searchButton(OKButton,0.7,1,True)
                 wait(1)
         searchButton(backButton,0.7,1,True)
-    if autoRun:
-        searchButton(button1,0.7,1,True)
-        searchButton(toki,0.7,1,True)
-        wait()
-        press('down')
-        press('up')
-        press('right')
-        press('enter')
-        wait()
-        press('enter')
-        # self.clickSpecific(autoRun,0.7,1)
-        # self.clickSpecific(OKButton2,0.7,1)
-        searchButton(endGame,0.7,1)
-        wait()
-        press('right',2)
-        # searchButton(OKButton,0.7,1,True)
-        wait()
-        press('enter')
-        wait()
-        press('enter')
+    match autoRun:
+        case 0:
+            searchButton(strengthen,0.7,1,True)
+            searchButton(toki,0.7,1,True)
+            wait()
+            press('down')
+            press('up')
+            press('right')
+            press('enter')
+            wait()
+            press('enter')
+            # self.clickSpecific(autoRun,0.7,1)
+            # self.clickSpecific(OKButton2,0.7,1)
+            searchButton(endGame,0.7,1)
+            wait()
+            press('right',2)
+            # searchButton(OKButton,0.7,1,True)
+            wait()
+            press('enter')
+            wait()
+            press('enter')
+        case 1:
+            #arena
+            auto.click(mainStoryPos)
+            pos = searchButton(arenaButton,0.9,1)
+            wait()
+            auto.click(pos)
+            pos = searchButton(skipButton,0.9,1)
+            wait()
+            auto.click(pos)
+            while not searchButton(arenaForm,0.9):
+                press('enter')
+            press('left')
+            press('enter')
+            wait()
+            press('enter')
+            searchButton(endGame,0.7,1)
+            wait()
+            press('right',2)
+            wait()
+            press('enter')
+            wait()
+            press('enter')
+        case 2:
+            #exit
+            print('exit')
+            pos = searchButton(menu,0.8,1)
+            wait()
+            auto.click(pos)
+            wait()
+            pos = searchButton(terminate,0.8,1)
+            wait()
+            auto.click(pos)
+            wait()
+            press('enter')
 
 def battleOnly(txt):
     battleInstruction(txt)
@@ -449,7 +534,7 @@ def enterBattleHandler(target,level,times,team=0,former=False,ticket=False,instr
             if not won:
                 if 0<target<=5:
                     # re enter jewel
-                    print('re enter jewel')
+                    enterJewel(target,level,useLife,ticket,refill,team,former)
                 else:
                     enterOrbBoss2(level,useLife,ticket,refill,team,former)
                     continue
@@ -489,4 +574,24 @@ def enterBattleHandler(target,level,times,team=0,former=False,ticket=False,instr
                 auto.click(1,1)
                 pos = searchButton(homeButton,0.9)
             auto.click(pos)
-            searchButton(OKButton,0.7,1,clickit=True)
+            # searchButton(OKButton,0.7,1,clickit=True)
+            wait()
+            press('enter')
+
+def bunChan(count):
+    counter = 0
+    print('bunChan')
+    while counter < count:
+        print(counter)
+        press('enter')
+        searchButton(turnEndButton,0.7,2)
+        searchButton(battleResult,0.7,1)
+        while not searchButton(arenaYameru,0.7):
+            press('enter')
+            wait()
+        counter +=1
+    searchButton(arenaYameru,0.7,1,True)
+    press('enter')
+    searchButton(arenaBack,0.7,1,True)
+
+
