@@ -3,46 +3,45 @@ import subprocess
 import os
 import time
 import re
-import _thread
 from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
 
-titleMenu = r'C:\Users\jeffr\Desktop\AutoHebuban\titleMenu.png'
-end_training_image = r'C:\Users\jeffr\Desktop\AutoHebuban\AutoTrainEnd.png'
-button1 = r'C:\Users\jeffr\Desktop\AutoHebuban\button1.png'
-orbIcon = r'C:\Users\jeffr\Desktop\AutoHebuban\orb.png'
-JewelIcon = r'C:\Users\jeffr\Desktop\AutoHebuban\jewel.png'
-detailButton = r'C:\Users\jeffr\Desktop\AutoHebuban\detailButton.png'
-battleButton = r'C:\Users\jeffr\Desktop\AutoHebuban\battle.png'
-maxLifeButton = r'C:\Users\jeffr\Desktop\AutoHebuban\maxLife.png'
-OKButton = r'C:\Users\jeffr\Desktop\AutoHebuban\OK.png'
-sortieButton = r'C:\Users\jeffr\Desktop\AutoHebuban\sortie.png'
-formerTeamButton = r'C:\Users\jeffr\Desktop\AutoHebuban\formerteam.png'
-OKButton2 = r'C:\Users\jeffr\Desktop\AutoHebuban\OK2.png'
-orbBossChallButton = r'C:\Users\jeffr\Desktop\AutoHebuban\orbBossChall.png'
-homeButton = r'C:\Users\jeffr\Desktop\AutoHebuban\homeButton.png'
-turnEndButton = r'C:\Users\jeffr\Desktop\AutoHebuban\turnEnd.png'
-battleResult = r'C:\Users\jeffr\Desktop\AutoHebuban\battleResult.png'
-againButton = r'C:\Users\jeffr\Desktop\AutoHebuban\again.png'
-yameru = r'C:\Users\jeffr\Desktop\AutoHebuban\yameru.png'
-toki = r'C:\Users\jeffr\Desktop\AutoHebuban\toki.png'
-autoRun = r'C:\Users\jeffr\Desktop\AutoHebuban\autoRun.png'
-endGame = r'C:\Users\jeffr\Desktop\AutoHebuban\endGame.png'
-skipButton = r'C:\Users\jeffr\Desktop\AutoHebuban\skip.png'
-notEnoughLife = r'C:\Users\jeffr\Desktop\AutoHebuban\notEnoughLife.png'
-useLifeStone = r'C:\Users\jeffr\Desktop\AutoHebuban\useLifeStone.png'
-dailyFree = r'C:\Users\jeffr\Desktop\AutoHebuban\dailyFree.png'
-dailyGachaConfirm = r'C:\Users\jeffr\Desktop\AutoHebuban\dailyGachaConfirm.png'
-okButtonDaily = r'C:\Users\jeffr\Desktop\AutoHebuban\okButtonDaily.png'
-auto1 = r'C:\Users\jeffr\Desktop\AutoHebuban\auto1.png'
-autoFull = r'C:\Users\jeffr\Desktop\AutoHebuban\autoFull.png'
-missionButton = r'C:\Users\jeffr\Desktop\AutoHebuban\missionButton.png'
-takeReward = r'C:\Users\jeffr\Desktop\AutoHebuban\takeReward.png'
-backButton = r'C:\Users\jeffr\Desktop\AutoHebuban\backButton.png'
-weeklyButton = r'C:\Users\jeffr\Desktop\AutoHebuban\weeklyButton.png'
-takeRewardDisabled = r'C:\Users\jeffr\Desktop\AutoHebuban\takeRewardDisabled.png'
-maxLifeButton2 = r'C:\Users\jeffr\Desktop\AutoHebuban\maxLife2.png'
+titleMenu = 'titleMenu.png'
+end_training_image = 'AutoTrainEnd.png'
+button1 = 'button1.png'
+orbIcon = 'orb.png'
+JewelIcon = 'jewel.png'
+detailButton = 'detailButton.png'
+battleButton = 'battle.png'
+maxLifeButton = 'maxLife.png'
+OKButton = 'OK.png'
+sortieButton = 'sortie.png'
+formerTeamButton = 'formerteam.png'
+OKButton2 = 'OK2.png'
+orbBossChallButton = 'orbBossChall.png'
+homeButton = 'homeButton.png'
+turnEndButton = 'turnEnd.png'
+battleResult = 'battleResult.png'
+againButton = 'again.png'
+yameru = 'yameru.png'
+toki = 'toki.png'
+autoRun = 'autoRun.png'
+endGame = 'endGame.png'
+skipButton = 'skip.png'
+notEnoughLife = 'notEnoughLife.png'
+useLifeStone = 'useLifeStone.png'
+dailyFree = 'dailyFree.png'
+dailyGachaConfirm = 'dailyGachaConfirm.png'
+okButtonDaily = 'okButtonDaily.png'
+auto1 = 'auto1.png'
+autoFull = 'autoFull.png'
+missionButton = 'missionButton.png'
+takeRewardButton = 'takeReward.png'
+backButton = 'backButton.png'
+weeklyButton = 'weeklyButton.png'
+takeRewardDisabled = 'takeRewardDisabled.png'
+maxLifeButton2 = 'maxLife2.png'
 OrbBossItemPos = [[1516,445],[1517,607],[1523,776],[1523,914],[1526,850]]
 OrbBossLevelPos = [[1766,277],[1770,466],[1769,661],[1765,852]]
 detailPos = [[1521,366],[1517,529],[1523,690],[1631,856],[1526,473],[1513,640],[1535,813]]
@@ -134,7 +133,7 @@ def handleBeforeHomePage(daily):
         print(trySkip(),' onSkippingWhatever')
         inMainPage = searchButton(button1,confidence=0.6)
         time.sleep(regularRetryInterval)
-        auto.click(1,1) # incase missed to skip battle result
+        press('enter') # incase missed to skip battle result
 
 def setSkill(slot,skill):
     slot,skill = int(slot),int(skill)
@@ -170,10 +169,11 @@ def trySkip():
 
 def tryExitAutoRun():
     pos = searchButton(end_training_image,confidence=0.7)
-    if pos is not None:
+    if pos:
         time.sleep(regularRetryInterval)
-        print('clicking at',pos)
-        auto.click(pos)
+        press('left')
+        wait()
+        press('enter')
         return True
     else:
         return False
@@ -228,9 +228,9 @@ def enterOrbBoss2(Level,useLife,ticket,refill,team,former):
                 press('left')
                 press('enter')
         # searchButton(OKButton,0.7,1,True)
-        wait()
+        wait(1)
         press('enter')
-        wait()
+        wait(1)
     # searchButton(OKButton,0.7,1,True)
     press('enter')
     # searchButton(formerTeamButton,0.7,1,True)
@@ -357,36 +357,12 @@ def battleInstruction(txtName):
             wait(2)
         return True
 
-def interrupt_function():
-    print("Interrupting the main thread...")
-    _thread.interrupt_main()
-
-# class autoHvbn:
-#     def __init__(self):
-#         pass
-
-def goAutoRun():
-    searchButton(button1,0.7,1,True)
-    searchButton(toki,0.7,1,True)
-    wait()
-    press('down')
-    press('up')
-    press('right')
-    press('enter')
-    wait()
-    press('enter')
-    # self.clickSpecific(autoRun,0.7,1)
-    # self.clickSpecific(OKButton2,0.7,1)
-    searchButton(endGame,0.7,1)
-    wait()
-    press('right',2)
-    # searchButton(OKButton,0.7,1,True)
-    wait()
-    press('enter')
-    wait()
-    press('enter')
+# def interrupt_function():
+#     print("Interrupting the main thread...")
+#     _thread.interrupt_main()
 
 def launchApplication(daily):
+    auto.PAUSE = 0.1
     cwd = os.getcwd()
     os.chdir(r'C:\Users\jeffr\Desktop')
     subprocess.call('ヘブンバーンズレッド.url', shell = True)
@@ -394,42 +370,63 @@ def launchApplication(daily):
     wait(5)
     searchButton(titleMenu,confidence=0.9,retry=0.5)
     wait(1)
-    auto.click(1000,800)
+    press('enter')
     handleBeforeHomePage(daily)
 
-def takeReward(daily,weekly):
+def closeProcess(daily,weekly,autoRun):
     print(daily,weekly)
     if daily or weekly:
         searchButton(button1,0.7,1)
         searchButton(missionButton,0.7,1,True)
         if daily:
-            reward = searchButton(takeReward,0.8)
+            reward = searchButton(takeRewardButton,0.8)
             disabled = searchButton(takeRewardDisabled,0.8)
             while not (reward or disabled):
                 print(reward, disabled, reward or disabled)
-                reward = searchButton(takeReward,0.8)
+                reward = searchButton(takeRewardButton,0.8)
                 disabled = searchButton(takeRewardDisabled,0.8)
             if reward:
-                auto.click(reward)
+                auto.moveto(reward,1)
+                auto.click()
                 wait(1)
                 searchButton(OKButton,0.7,1,True)
                 wait(1)
         if weekly:
             wait(1)
             searchButton(weeklyButton,0.7,1,True)
-            reward = searchButton(takeReward,0.8)
+            reward = searchButton(takeRewardButton,0.8)
             disabled = searchButton(takeRewardDisabled,0.8)
             while not (reward or disabled):
                 print(reward, disabled, reward or disabled)
-                reward = searchButton(takeReward,0.8)
+                reward = searchButton(takeRewardButton,0.8)
                 disabled = searchButton(takeRewardDisabled,0.8)
             if reward:
-                wait(1)
-                auto.click(reward)
+                auto.moveto(reward,1)
+                auto.click()
                 wait(1)
                 searchButton(OKButton,0.7,1,True)
                 wait(1)
         searchButton(backButton,0.7,1,True)
+    if autoRun:
+        searchButton(button1,0.7,1,True)
+        searchButton(toki,0.7,1,True)
+        wait()
+        press('down')
+        press('up')
+        press('right')
+        press('enter')
+        wait()
+        press('enter')
+        # self.clickSpecific(autoRun,0.7,1)
+        # self.clickSpecific(OKButton2,0.7,1)
+        searchButton(endGame,0.7,1)
+        wait()
+        press('right',2)
+        # searchButton(OKButton,0.7,1,True)
+        wait()
+        press('enter')
+        wait()
+        press('enter')
 
 def battleOnly(txt):
     battleInstruction(txt)

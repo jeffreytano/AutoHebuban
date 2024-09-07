@@ -1,0 +1,12 @@
+sweep: True
+former: True
+daily: False
+weekly: True
+target: 2
+level: 5
+count: 3
+team: 0
+battle: 1
+resource: 0
+refill: 1
+auto: 0

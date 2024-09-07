@@ -11,6 +11,7 @@
 from pynput import keyboard
 from multiprocessing import Process, Event
 import threading
+import atexit
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
@@ -35,6 +36,8 @@ class Ui_MainWindow(object):
     terminated = False
 
     def setupUi(self, MainWindow):
+        atexit.register(self.savePreset)
+
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(561, 505)
@@ -674,25 +677,66 @@ class Ui_MainWindow(object):
 
 # manually added
 
+    def setAuto(self,target):
+        match target:
+            case 0:
+                self.tokiAuto.setChecked(True)
+            case 1:
+                self.arenaAuto.setChecked(True)
+            case 2:
+                self.doNoAuto.setChecked(True)
+
     def loadPreset(self):
         try:
-            file = open('Preset.txt','r+')
+            file = open('Preset.txt','r')
+            a = []
+            for line in file.readlines():
+                cleaned_line = line.strip()
+                a.append(cleaned_line.split(' ')[1])
 
-            # self.Login.setChecked(True)
-            # self.tokiAuto.setChecked(True)
-            # self.SkipTrailer.setChecked(True)
-            # self.notSkipGacha.setChecked(True)
-            # self.Sweep.setChecked(True)
-            # self.targetComboBox.setCurrentIndex(1)
-            # self.levelComboBox.setCurrentIndex(1)
-            # self.sweepTimeComboBox.setCurrentIndex(1)
-            # self.battleInstruction.setCurrentIndex(1)
-            # self.Daily.setChecked(True)
-            # self.Weekly.setChecked(True)
-            # self.tokiAuto.setChecked(True)
+            rewrite = [
+                self.Sweep.setChecked,
+                self.formerTeam.setChecked,
+                self.Daily.setChecked,
+                self.Weekly.setChecked,
+                self.targetComboBox.setCurrentIndex,
+                self.levelComboBox.setCurrentIndex,
+                self.sweepTimeComboBox.setCurrentIndex,
+                self.teamSelect.setCurrentIndex,
+                self.battleInstruction.setCurrentIndex,
+                self.resourceComboBox.setCurrentIndex,
+                self.refillComboBox.setCurrentIndex,
+                self.setAuto
+            ]
+            
+            for func, param in zip(rewrite,a):
+                if param in ['True','False']:
+                    param = eval(param)
+                else:
+                    param = int(param)
+                func(param)
+            file.close()
 
         except FileNotFoundError:
             print("Preset not found.")
+
+    def savePreset(self):
+        file = open('Preset.txt','w')
+        file.write('sweep: '+str(str(self.Sweep.isChecked()))+'\n')
+        file.write('former: '+str(str(self.formerTeam.isChecked()))+'\n')
+        file.write('daily: '+str(str(self.Daily.isChecked()))+'\n')
+        file.write('weekly: '+str(str(self.Weekly.isChecked()))+'\n')
+        file.write('target: '+str(self.targetComboBox.currentIndex())+'\n')
+        file.write('level: '+str(self.levelComboBox.currentIndex())+'\n')
+        file.write('count: '+str(self.sweepTimeComboBox.currentIndex())+'\n')
+        file.write('team: '+str(self.teamSelect.currentIndex())+'\n')
+        file.write('battle: '+str(self.battleInstruction.currentIndex())+'\n')
+        file.write('resource: '+str(self.resourceComboBox.currentIndex())+'\n')
+        file.write('refill: '+str(self.refillComboBox.currentIndex())+'\n')
+        auto = '0' if self.tokiAuto.isChecked() else '1' if self.arenaAuto.isChecked() else '2'
+        file.write('auto: '+auto+'\n')
+        file.close()
+
 
     def loadBattleInstruction(self):
         preset = []
@@ -734,12 +778,6 @@ class Ui_MainWindow(object):
                     self.levelComboBox.setCurrentIndex(3)
                 # self.levelComboBox.removeItem(4)
                 # self.levelComboBox.removeItem(5)
-
-    # def fullSequence(self):
-    #     self.process = Process(target=self.fullSequence)
-    #     self.process.start()
-    #     self.monitor_key_press()
-    #     self.process.join()
     
     def fullSequence(self):
         print('full sequence')
@@ -750,12 +788,6 @@ class Ui_MainWindow(object):
         self.process_finished.wait()
         if not self.terminated:
             self.onlyClose()
-
-    # def sweepClose(self):
-    #     self.process = Process(target=self.sweepClose)
-    #     self.process.start()
-    #     self.monitor_key_press()
-    #     self.process.join()
 
     def sweepClose(self):
         print('sweepClose')
