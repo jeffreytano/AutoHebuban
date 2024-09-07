@@ -565,7 +565,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"AutoHvbn", None))
         self.taskGroup.setTitle(QCoreApplication.translate("MainWindow", u"\u30db\u30fc\u30e0\u753b\u9762", None))
         self.RadioButtons.setTitle(QCoreApplication.translate("MainWindow", u"\u9589\u3058\u308b\u524d", None))
         self.tokiAuto.setText(QCoreApplication.translate("MainWindow", u"\u6642\u306e\u4fee\u7df4\u5834", None))
