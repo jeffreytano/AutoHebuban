@@ -12,6 +12,7 @@ from pynput import keyboard
 from multiprocessing import Process, Event
 import threading
 import atexit
+import os
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
@@ -424,7 +425,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.fileName = QLineEdit(self.layoutWidget4)
         self.fileName.setObjectName(u"fileName")
-
+    
         self.horizontalLayout.addWidget(self.fileName)
 
         self.fileComboBox = QComboBox(self.layoutWidget4)
@@ -442,21 +443,22 @@ class Ui_MainWindow(object):
         self.saveInfoLayout.setContentsMargins(0, 0, 0, 0)
         self.saveButton = QPushButton(self.layoutWidget5)
         self.saveButton.setObjectName(u"saveButton")
+        
 
         self.saveInfoLayout.addWidget(self.saveButton)
 
-        self.infoButton = QPushButton(self.layoutWidget5)
-        self.infoButton.setObjectName(u"infoButton")
+        self.deleteButton = QPushButton(self.layoutWidget5)
+        self.deleteButton.setObjectName(u"deleteButton")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(2)
-        sizePolicy1.setHeightForWidth(self.infoButton.sizePolicy().hasHeightForWidth())
-        self.infoButton.setSizePolicy(sizePolicy1)
-        self.infoButton.setMinimumSize(QSize(3, 0))
-        icon = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.HelpAbout))
-        self.infoButton.setIcon(icon)
+        sizePolicy1.setHeightForWidth(self.deleteButton.sizePolicy().hasHeightForWidth())
+        self.deleteButton.setSizePolicy(sizePolicy1)
+        self.deleteButton.setMinimumSize(QSize(3, 0))
+        # icon = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.HelpAbout))
+        # self.deleteButton.setIcon(icon)
 
-        self.saveInfoLayout.addWidget(self.infoButton)
+        self.saveInfoLayout.addWidget(self.deleteButton)
 
         self.tabGroup.addTab(self.Battle, "")
         self.layoutWidget6 = QWidget(self.centralwidget)
@@ -504,7 +506,6 @@ class Ui_MainWindow(object):
         self.onlyBattleButton.setObjectName(u"onlyBattleButton")
         self.onlyBattleButton.setMinimumSize(QSize(128, 0))
         self.onlyBattleButton.setFont(font)
-        self.onlyBattleButton.clicked.connect(self.onlyBattleWithMonitor)
 
         self.ButtonGroup2.addWidget(self.onlyBattleButton)
 
@@ -532,6 +533,11 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
         
         self.levelComboBox.setMaxVisibleItems(6)
+        self.deleteButton.clicked.connect(self.deleteScript)
+        self.fileComboBox.currentIndexChanged.connect(self.onFileBrowserChange)
+        self.fileName.textChanged.connect(self.onFileNameChange)
+        self.onlyBattleButton.clicked.connect(self.onlyBattle)
+        self.saveButton.clicked.connect(self.saveScript)
         self.StartButton.clicked.connect(self.startSequence)
         self.SweepButton.clicked.connect(self.onlySweep) # manually added
         self.targetComboBox.currentIndexChanged.connect(self.onTargetChange)
@@ -665,7 +671,8 @@ class Ui_MainWindow(object):
         self.bunchanButton.setText(QCoreApplication.translate("MainWindow", u"\u958b\u59cb", None))
         self.fileName.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u30d5\u30a1\u30a4\u30eb\u540d", None))
         self.saveButton.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
-        self.infoButton.setText(QCoreApplication.translate("MainWindow", u"\u4f7f\u7528\u8aac\u660e\u66f8", None))
+        # self.deleteButton.setText(QCoreApplication.translate("MainWindow", u"\u4f7f\u7528\u8aac\u660e", None))
+        self.deleteButton.setText(QCoreApplication.translate("MainWindow", "Delete", None))
         self.tabGroup.setTabText(self.tabGroup.indexOf(self.Battle), QCoreApplication.translate("MainWindow", u"\u6226\u95d8\u6307\u793a", None))
         self.AllButton.setText(QCoreApplication.translate("MainWindow", u"\u8d77\u52d5\uff0b\u5468\u56de\uff0b\u9589\u3058\u308b", None))
         self.SweepCloseButton.setText(QCoreApplication.translate("MainWindow", u"\u5468\u56de\uff0b\u9589\u3058\u308b", None))
@@ -739,11 +746,11 @@ class Ui_MainWindow(object):
 
 
     def loadBattleInstruction(self):
-        preset = []
         file = open('index.txt','r')
         for line in file.readlines():
-            preset.append(line)
-            self.battleInstruction.addItem(line)
+            cleanLine = line.strip()
+            self.battleInstruction.addItem(cleanLine)
+            self.fileComboBox.addItem(cleanLine)
         file.close()
 
     def onTargetChange(self,index):
@@ -807,12 +814,14 @@ class Ui_MainWindow(object):
         # self.monitor_key_press()
         # self.process.join()
 
-    def onlyBattleWithMonitor(self):
+    def onlyBattle(self):
         # autoHvbn.battleOnly(self,self.battleInstruction.currentText())
-        self.process = Process(target=autohvbnImporter.battleOnly,args=(self.battleInstruction.currentText(),))
-        self.process.start()
-        self.monitor_key_press()
-        self.process.join()
+        params = [self.battleInstruction.currentText()]
+        self.callFunctionWithMonitor(autohvbnImporter.battleOnly,params)
+        # self.process = Process(target=autohvbnImporter.battleOnly,args=(self.battleInstruction.currentText(),))
+        # self.process.start()
+        # self.monitor_key_press()
+        # self.process.join()
 
     def onlyClose(self):
         params = [self.Daily.isChecked(),self.Weekly.isChecked(),self.tokiAuto.isChecked()]
@@ -867,3 +876,56 @@ class Ui_MainWindow(object):
         if listener:
             listener.stop()
             self.process_finished.set()
+
+    def saveScript(self):
+        fn = self.fileName.text() 
+        fullFuleName = fn + '.txt'
+        if fn != 'index.txt':
+            file = open(fullFuleName,'w')
+            content = self.instructionEdit.toPlainText()
+            file.write(content)
+            file.close()
+            file = open('index.txt','a')
+            file.write(fn+'\n')
+            file.close
+            self.battleInstruction.addItem(fn)
+            self.fileComboBox.addItem(fn)
+            self.fileComboBox.setCurrentText(fn)
+            self.saveButton.setEnabled(False)
+
+    def onFileNameChange(self):
+        self.saveButton.setEnabled(True)
+
+    def onFileBrowserChange(self):
+        fn = self.fileComboBox.currentText()
+        fullFileName = fn + '.txt'
+        file = open(fullFileName,'r')
+        lines = file.readlines()
+        content = ''.join(lines)
+        self.instructionEdit.setPlainText(content)
+        file.close()
+        self.fileName.setText(fn)
+
+    def deleteScript(self):
+        fn = self.fileComboBox.currentText()
+        file = open('index.txt','r')
+        lines = file.readlines()
+        newConetent = []
+        for line in lines:
+            if line != fn:
+                newConetent.append(line)
+        file.close()
+        file = open('index.txt','w')
+        for line in newConetent:
+            file.write(line)
+        file.close()
+        if os.path.exists(fn+'.txt'):
+            os.remove(fn+'.txt')
+        index = self.fileComboBox.currentIndex()
+        self.fileComboBox.removeItem(index)
+        self.fileComboBox.setCurrentIndex(-1)
+        self.fileName.setText('')
+        self.instructionEdit.setPlainText('')
+        self.battleInstruction.removeItem(index+1)
+
+            
