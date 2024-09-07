@@ -2,11 +2,11 @@ former: True
 daily: True
 weekly: True
 notSkipDaily: True
-target: 1
-level: 0
+target: 10
+level: 3
 count: 3
-team: 3
-battle: 0
-resource: 1
-refill: 1
+team: 0
+battle: 1
+resource: 0
+refill: 0
 auto: 0

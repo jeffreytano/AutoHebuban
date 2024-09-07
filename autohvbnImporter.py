@@ -146,12 +146,20 @@ def handleBeforeHomePage(daily):
         time.sleep(regularRetryInterval)
         press('enter') # incase missed to skip battle result
 
-def setSkill(slot,skill):
-    slot,skill = int(slot),int(skill)
+def setSkill(slot,skill,target = 0):
+    slot,skill,target = int(slot),int(skill),int(target)
     press(slot)
     # auto.click(BattleChar[slot-1])
     wait()
     press('down',skill)
+    if (target):
+        wait()
+        if (target>slot):
+            press('right',target-slot)
+        else:
+            press('left',slot-target)
+        press('enter')
+        wait()
     press('enter')
 
     # auto.click(SkillSlot[skill-1])
@@ -377,6 +385,7 @@ def battleInstruction(txtName):
             commands = line.split()
             for command in commands:
                 SetSkill = re.search('^C[1-6]S[1-9]',command)
+                SetSkillTarget = re.search('^C[1-6]S[1-9]C[1-6]',command)
                 Swap = re.search('^C[1-6]C[1-6]',command)
                 if re.search('^T\d',command):
                     print('Turn',command[1:])
@@ -386,6 +395,10 @@ def battleInstruction(txtName):
                     setSkill(command[1],command[3])
                     wait()
                     continue
+                if SetSkillTarget:
+                    print('SetSkill',command[1],command[3],command[5])
+                    setSkill(command[1],command[3],command[5])
+                    wait()
                 if Swap:
                     print('Swap',command[1],command[3])
                     switchPos(command[1],command[3])
