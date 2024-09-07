@@ -1,12 +1,12 @@
-former: True
+former: False
 daily: True
-weekly: True
+weekly: False
 notSkipDaily: True
-target: 10
+target: 5
 level: 3
 count: 3
 team: 0
-battle: 1
+battle: 3
 resource: 0
 refill: 0
 auto: 0

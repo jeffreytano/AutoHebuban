@@ -53,40 +53,40 @@ teamPos = [[326,78],[390,78],[454,78],[523,78],[587,78],[678,78],[742,78],[808,7
 regularRetryInterval = 0.5
 mainStoryPos = (831,937)
     
-def press(key,times = 1):
-    key = str(key)
+def press(key,times = 1,delay = 0.1):
+    key = str(key).lower()
     if len(key) == 1:
         for i in range(times):
             keyboard.press(key)
             keyboard.release(key)
-            wait(0.1)
+            wait(delay)
     else:
         match key:
             case 'down':
                 for i in range(times):
                     keyboard.press(Key.down)
                     keyboard.release(Key.down)
-                    wait(0.1)
+                    wait(delay)
             case 'up':
                 for i in range(times):
                     keyboard.press(Key.up)
                     keyboard.release(Key.up)
-                    wait(0.1)
+                    wait(delay)
             case 'left':
                 for i in range(times):
                     keyboard.press(Key.left)
                     keyboard.release(Key.left)
-                    wait(0.1)
+                    wait(delay)
             case 'right':
                 for i in range(times):
                     keyboard.press(Key.right)
                     keyboard.release(Key.right)
-                    wait(0.1)
+                    wait(delay)
             case 'enter':
                 for i in range(times):
                     keyboard.press(Key.enter)
                     keyboard.release(Key.enter)
-                    wait(0.1)
+                    wait(delay)
 
 def searchButton(image,confidence,retry=-1,clickit = False):
     time.sleep(0.5)
@@ -153,11 +153,13 @@ def setSkill(slot,skill,target = 0):
     wait()
     press('down',skill)
     if (target):
+        press('enter')
         wait()
         if (target>slot):
-            press('right',target-slot)
+            press('d',target-slot,0.2)
         else:
-            press('left',slot-target)
+            press('a',slot-target,0.2)
+        wait()
         press('enter')
         wait()
     press('enter')
@@ -373,10 +375,10 @@ def battleInstruction(txtName):
                 break
             wait(5)
             while not searchButton(turnEndButton,0.9):
-                if searchButton(homeButton,0.9):
+                if searchButton(homeButton,0.9) or searchButton(strengthen,0.9):
                     file.close()
                     return False
-                if searchButton(battleResult,0.9):
+                if searchButton(battleResult,0.9) :
                     file.close()
                     return True
                 wait(1)
@@ -390,20 +392,27 @@ def battleInstruction(txtName):
                 if re.search('^T\d',command):
                     print('Turn',command[1:])
                     continue
+                if SetSkillTarget:
+                    print('SetSkill',command[1],command[3],command[5])
+                    setSkill(command[1],command[3],command[5])
+                    wait()
+                    continue
                 if SetSkill:
                     print('SetSkill',command[1],command[3])
                     setSkill(command[1],command[3])
                     wait()
                     continue
-                if SetSkillTarget:
-                    print('SetSkill',command[1],command[3],command[5])
-                    setSkill(command[1],command[3],command[5])
-                    wait()
                 if Swap:
                     print('Swap',command[1],command[3])
                     switchPos(command[1],command[3])
                     wait()
                     continue
+                if command == 'OD':
+                    print('OD')
+                    while not searchButton(turnEndButton,0.7):
+                        print('pressing O')
+                        press('o')
+                        wait()
                 if command == 'TE':
                     print('TurnEnd')
                     turnEnd()
@@ -429,7 +438,8 @@ def battleInstruction(txtName):
 def launchApplication(daily):
     auto.PAUSE = 0.1
     cwd = os.getcwd()
-    os.chdir(r'C:\Users\jeffr\Desktop')
+    path = os.path.join(os.path.expanduser("~"), "Desktop")
+    os.chdir(path)
     subprocess.call('ヘブンバーンズレッド.url', shell = True)
     os.chdir(cwd)
     wait(5)
@@ -451,8 +461,7 @@ def closeProcess(daily,weekly,autoRun):
                 reward = searchButton(takeRewardButton,0.8)
                 disabled = searchButton(takeRewardDisabled,0.8)
             if reward:
-                auto.moveto(reward,1)
-                auto.click()
+                auto.click(reward)
                 wait(1)
                 searchButton(OKButton,0.7,1,True)
                 wait(1)
@@ -466,8 +475,7 @@ def closeProcess(daily,weekly,autoRun):
                 reward = searchButton(takeRewardButton,0.8)
                 disabled = searchButton(takeRewardDisabled,0.8)
             if reward:
-                auto.moveto(reward,1)
-                auto.click()
+                auto.click(reward)
                 wait(1)
                 searchButton(OKButton,0.7,1,True)
                 wait(1)
@@ -550,6 +558,7 @@ def enterBattleHandler(target,level,times,team=0,former=False,ticket=False,instr
                 if 0<target<=5:
                     # re enter jewel
                     enterJewel(target,level,useLife,ticket,refill,team,former)
+                    continue
                 else:
                     enterOrbBoss2(level,useLife,ticket,refill,team,former)
                     continue
@@ -592,6 +601,10 @@ def enterBattleHandler(target,level,times,team=0,former=False,ticket=False,instr
             # searchButton(OKButton,0.7,1,clickit=True)
             wait()
             press('enter')
+        while not searchButton(strengthen,0.7):
+            press('enter')
+            wait()
+        
 
 def bunChan(count):
     counter = 0

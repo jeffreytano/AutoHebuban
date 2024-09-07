@@ -10,11 +10,6 @@ class MainUi(QtWidgets.QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-
-def interrupt_function():
-    print("Interrupting the main thread...")
-    _thread.interrupt_main()
     
 
 if __name__ == "__main__":
