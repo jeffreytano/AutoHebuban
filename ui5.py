@@ -8,6 +8,8 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+from PySide6 import QtWidgets
+
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -22,6 +24,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGroupBox,
     QVBoxLayout, QWidget)
 
 from autohvbnImporter import autoHvbn
+
 autohvbn = autoHvbn()
 
 class Ui_MainWindow(object):
@@ -372,7 +375,6 @@ class Ui_MainWindow(object):
 
         self.loginAccountLayout.addWidget(self.loginComboBox)
 
-
         self.verticalLayout_3.addWidget(self.taskGroup)
 
         self.tabGroup.addTab(self.Task, "")
@@ -478,7 +480,6 @@ class Ui_MainWindow(object):
 
         self.ButtonGroup1.addWidget(self.onlyCloseButton)
 
-
         self.GreatButtonGroup.addLayout(self.ButtonGroup1)
 
         self.ButtonGroup2 = QHBoxLayout()
@@ -504,7 +505,6 @@ class Ui_MainWindow(object):
 
         self.ButtonGroup2.addWidget(self.SweepButton)
 
-
         self.GreatButtonGroup.addLayout(self.ButtonGroup2)
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -520,9 +520,7 @@ class Ui_MainWindow(object):
 
         self.tabGroup.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(MainWindow)
-
         
         self.levelComboBox.setMaxVisibleItems(6)
         self.StartButton.clicked.connect(self.startSequence)
@@ -735,7 +733,6 @@ class Ui_MainWindow(object):
     def fullSequence(self):
         print('full sequence')
         # autohvbn.interrupt()
-        autohvbn.takeReward(self.Daily.isChecked(),self.Weekly.isChecked())
 
     def sweepClose(self):
         print('sweepClose')
@@ -745,8 +742,7 @@ class Ui_MainWindow(object):
         autoHvbn.launchApplication(self.notSkipGacha.isChecked())
 
     def onlyBattle(self):
-        print('onlyBattle')
-        autoHvbn.battleOnly(self.battleInstruction.currentText())
+        autoHvbn.battleOnly(self,self.battleInstruction.currentText())
 
     def onlyClose(self):
         autohvbn.takeReward(self.Daily.isChecked(),self.Weekly.isChecked())
@@ -754,13 +750,11 @@ class Ui_MainWindow(object):
             autohvbn.goAutoRun()
 
     def onlySweep(self):
-        print('onlySweep',self.targetComboBox.currentIndex())
-        targetIndex = self.targetComboBox.currentIndex()
-        autohvbn.enterBattleHandler(target=targetIndex,
+        autohvbn.enterBattleHandler(target=self.targetComboBox.currentIndex(),
                                     level=self.levelComboBox.currentIndex(),
                                     times=self.sweepTimeComboBox.currentText(),
                                     team=self.teamSelect.currentIndex(),
-                                    former=self.formerTeam.isChecked,
+                                    former=self.formerTeam.isChecked(),
                                     ticket=self.resourceComboBox.currentIndex(),
                                     instruction=self.battleInstruction.currentText(),
                                     refill=self.refillComboBox.currentIndex())
