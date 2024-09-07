@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>527</height>
+    <height>537</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>100</height>
+            <height>110</height>
            </size>
           </property>
           <property name="font">
@@ -120,6 +120,9 @@
               </item>
               <item>
                <widget class="QCheckBox" name="LaunchApp">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
                 <property name="font">
                  <font>
                   <family>游ゴシック</family>
@@ -163,6 +166,29 @@
              </layout>
             </item>
            </layout>
+          </widget>
+          <widget class="QComboBox" name="loginComboBox">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>80</y>
+             <width>69</width>
+             <height>22</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="loginLabel">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>80</y>
+             <width>49</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>継承先</string>
+           </property>
           </widget>
          </widget>
         </item>
@@ -881,6 +907,128 @@
        <attribute name="title">
         <string>戦闘指示</string>
        </attribute>
+       <widget class="QPlainTextEdit" name="instructionEdit">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>50</y>
+          <width>471</width>
+          <height>241</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>340</y>
+          <width>258</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="bunchanLayout">
+         <item>
+          <widget class="QLabel" name="bunchanLabel">
+           <property name="text">
+            <string>豊後専用アリーナ周回</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="bunchanInput">
+           <property name="maximum">
+            <number>1000</number>
+           </property>
+           <property name="value">
+            <number>121</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bunchanButton">
+           <property name="text">
+            <string>開始</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>471</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>148</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="fileName">
+           <property name="placeholderText">
+            <string>ファイル名</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="fileComboBox">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>300</y>
+          <width>471</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="saveInfoLayout">
+         <property name="spacing">
+          <number>250</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="saveButton">
+           <property name="text">
+            <string>保存</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="infoButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>2</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>3</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>使用説明書</string>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>

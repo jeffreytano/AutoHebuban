@@ -71,11 +71,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.Login)
 
-        self.LaunchApp = QCheckBox(self.widget)
-        self.LaunchApp.setObjectName(u"LaunchApp")
+        # self.LaunchApp = QCheckBox(self.widget)
+        # self.LaunchApp.setObjectName(u"LaunchApp")
 
 
-        self.horizontalLayout.addWidget(self.LaunchApp)
+        # self.horizontalLayout.addWidget(self.LaunchApp)
 
         self.SkipTrailer = QCheckBox(self.widget)
         self.SkipTrailer.setObjectName(u"SkipTrailer")
@@ -170,6 +170,14 @@ class Ui_MainWindow(object):
         self.targetComboBox.addItem("")
         self.targetComboBox.addItem("")
         self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
+        self.targetComboBox.addItem("")
         self.targetComboBox.setObjectName(u"targetComboBox")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
@@ -178,7 +186,7 @@ class Ui_MainWindow(object):
         self.targetComboBox.setSizePolicy(sizePolicy2)
         self.targetComboBox.setMinimumSize(QSize(200, 0))
         
-        self.targetComboBox.currentIndexChanged.connect(self.onTargetChange)
+        
 
         self.TargetLayout.addWidget(self.targetComboBox)
 
@@ -250,7 +258,6 @@ class Ui_MainWindow(object):
 
         self.battleInstruction = QComboBox(self.widget3)
         self.battleInstruction.addItem("Auto")
-        self.battleInstruction.addItem("Default")
         self.battleInstruction.setObjectName(u"battleInstruction")
         sizePolicy2.setHeightForWidth(self.battleInstruction.sizePolicy().hasHeightForWidth())
         self.battleInstruction.setSizePolicy(sizePolicy2)
@@ -293,26 +300,26 @@ class Ui_MainWindow(object):
         self.AllButton = QPushButton(self.centralwidget)
         self.AllButton.setObjectName(u"AllButton")
 
-        self.AllButton.clicked.connect(self.fullSequence)
+        
 
-        self.ButtonGroup1.addWidget(self.AllButton) # manually added
+        
 
         self.SweepCloseButton = QPushButton(self.centralwidget)
         self.SweepCloseButton.setObjectName(u"SweepCloseButton")
 
-        self.SweepCloseButton.clicked.connect(self.sweepClose)
+        
 
         self.ButtonGroup1.addWidget(self.SweepCloseButton)
 
         self.StartButton = QPushButton(self.centralwidget)
         self.StartButton.setObjectName(u"StartButton")
-        self.StartButton.clicked.connect(self.startSequence)
+        
 
         self.ButtonGroup1.addWidget(self.StartButton)
 
         self.SweepButton = QPushButton(self.centralwidget)
         self.SweepButton.setObjectName(u"SweepButton")
-        self.SweepButton.clicked.connect(self.onlySweep) # manually added
+        
 
         self.ButtonGroup1.addWidget(self.SweepButton)
 
@@ -332,21 +339,28 @@ class Ui_MainWindow(object):
 
         self.taskTab.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(MainWindow)
+
+        self.levelComboBox.setMaxVisibleItems(6)
+        self.StartButton.clicked.connect(self.startSequence)
+        self.SweepButton.clicked.connect(self.onlySweep) # manually added
+        self.ButtonGroup1.addWidget(self.AllButton) # manually added
+        self.targetComboBox.currentIndexChanged.connect(self.onTargetChange)
+        self.AllButton.clicked.connect(self.fullSequence)
+        self.SweepCloseButton.clicked.connect(self.sweepClose)
 
         self.Login.setEnabled(False) # added manually
         self.SkipTrailer.setEnabled(False) # added manually
         self.notSkipGacha.setEnabled(False) # added manually
 
         self.tokiAuto.setChecked(True)  # added manually
-        self.LaunchApp.setChecked(True) # added manually
-        self.LaunchApp.setChecked(True) # added manually
+        # self.LaunchApp.setChecked(True) # added manually
         self.Daily.setChecked(True) # added manually
         self.Weekly.setChecked(True) # added manually
         self.Sweep.setChecked(True) # added manually
         self.targetComboBox.setCurrentIndex(9)
         self.levelComboBox.setCurrentIndex(3)
+        self.loadBattleInstructionTest()
 
         self.loadPreset()
     # setupUi
@@ -357,7 +371,7 @@ class Ui_MainWindow(object):
         self.StartLabelTitle.setText(QCoreApplication.translate("MainWindow", u"\u8d77\u52d5\u30b7\u30fc\u30af\u30a8\u30f3\u30b9:", None))
         self.StartLabel.setText("")
         self.Login.setText(QCoreApplication.translate("MainWindow", u"\u30a2\u30ab\u30a6\u30f3\u30c8\u7d99\u627f", None))
-        self.LaunchApp.setText(QCoreApplication.translate("MainWindow", u"\u30a2\u30d7\u30ea\u8d77\u52d5", None))
+        # self.LaunchApp.setText(QCoreApplication.translate("MainWindow", u"\u30a2\u30d7\u30ea\u8d77\u52d5", None))
         self.SkipTrailer.setText(QCoreApplication.translate("MainWindow", u"\u65b0\u30b9\u30bf\u30a4\u30eb\u30b9\u30ad\u30c3\u30d7", None))
         self.notSkipGacha.setText(QCoreApplication.translate("MainWindow", u"\u4e00\u65e5\u4e00\u56de\u30ac\u30c1\u30e3", None))
         self.taskGroup.setTitle(QCoreApplication.translate("MainWindow", u"\u30db\u30fc\u30e0\u753b\u9762\u3042\u3068", None))
@@ -431,25 +445,39 @@ class Ui_MainWindow(object):
             # self.tokiAuto.setChecked(True)
 
         except FileNotFoundError:
-            print("File not found. Please check the file path.")
+            print("Preset not found.")
+
+    def loadBattleInstructionTest(self):
+        preset = []
+        file = open('index.txt','r')
+        for line in file.readlines():
+            preset.append(line)
+            self.battleInstruction.addItem(line)
+        file.close()
 
     def onTargetChange(self,index):
         match index:
-            case index if 1<= index < 5:
+            case index if 0<= index < 5:
+                self.levelComboBox.setMaxCount(6)
                 self.levelComboBox.setMaxVisibleItems(6)
                 self.levelComboBox.setItemText(0,'Lv8')
                 self.levelComboBox.setItemText(1,'Lv9')
                 self.levelComboBox.setItemText(2,'Lv10')
                 self.levelComboBox.setItemText(3,'Lv11')
+                self.levelComboBox.addItem('Lv12')
+                self.levelComboBox.addItem('Lv13')
             case 5:
-                self.levelComboBox.setMaxVisibleItems(4)
+                self.levelComboBox.setMaxCount(4)
                 self.levelComboBox.setItemText(0,'Lv13')
                 self.levelComboBox.setItemText(1,'Lv14')
                 self.levelComboBox.setItemText(2,'Lv15')
                 self.levelComboBox.setItemText(3,'Lv16')
                 if self.levelComboBox.currentIndex()>3:
                     self.levelComboBox.setCurrentIndex(3)
+                # self.levelComboBox.removeItem(4)
+                # self.levelComboBox.removeItem(5)
             case index if 6<= index < 21:
+                self.levelComboBox.setMaxCount(4)
                 self.levelComboBox.setMaxVisibleItems(4)
                 self.levelComboBox.setItemText(0,'Lv1')
                 self.levelComboBox.setItemText(1,'Lv2')
@@ -457,9 +485,13 @@ class Ui_MainWindow(object):
                 self.levelComboBox.setItemText(3,'Lv4')
                 if self.levelComboBox.currentIndex()>3:
                     self.levelComboBox.setCurrentIndex(3)
+                # self.levelComboBox.removeItem(4)
+                # self.levelComboBox.removeItem(5)
 
     def fullSequence(self):
         print('full sequence')
+        # autohvbn.interrupt()
+        autohvbn.takeReward(self.Daily.isChecked(),self.Weekly.isChecked())
 
     def sweepClose(self):
         print('sweepClose')
@@ -469,7 +501,9 @@ class Ui_MainWindow(object):
         autoHvbn.launchApplication(self.notSkipGacha.isChecked())
 
     def onlySweep(self):
-        print('onlySweep')
+        print('onlySweep',self.targetComboBox.currentIndex())
         targetIndex = self.targetComboBox.currentIndex()
-        autohvbn.enterBattleHandler(int(targetIndex/5)-1,targetIndex%5,self.levelComboBox.currentIndex()+1,self.sweepTimeComboBox.currentIndex(),self.battleInstruction.currentIndex())
-            
+        if self.battleInstruction.currentIndex() > 0:
+            autohvbn.enterBattleHandler(targetIndex,self.levelComboBox.currentIndex(),self.sweepTimeComboBox.currentText(),False,self.battleInstruction.currentText())
+        else:
+            autohvbn.enterBattleHandler(targetIndex,self.levelComboBox.currentIndex(),self.sweepTimeComboBox.currentText(),False)

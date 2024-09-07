@@ -1,0 +1,1147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>561</width>
+    <height>505</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabGroup">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>9</y>
+      <width>543</width>
+      <height>381</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>游ゴシック</family>
+     </font>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="Task">
+     <attribute name="title">
+      <string>作業</string>
+     </attribute>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QGroupBox" name="taskGroup">
+        <property name="minimumSize">
+         <size>
+          <width>519</width>
+          <height>270</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>游ゴシック</family>
+         </font>
+        </property>
+        <property name="title">
+         <string>ホーム画面</string>
+        </property>
+        <widget class="QGroupBox" name="RadioButtons">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>70</y>
+           <width>181</width>
+           <height>161</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="title">
+          <string>閉じる前</string>
+         </property>
+         <widget class="QWidget" name="layoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>21</y>
+            <width>145</width>
+            <height>126</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QRadioButton" name="tokiAuto">
+             <property name="font">
+              <font>
+               <family>游ゴシック</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>時の修練場</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="arenaAuto">
+             <property name="font">
+              <font>
+               <family>游ゴシック</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>アリーナ</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="doNoAuto">
+             <property name="font">
+              <font>
+               <family>游ゴシック</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>何もしない</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="Weekly">
+             <property name="font">
+              <font>
+               <family>游ゴシック</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>ウィークリー受け取り</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="Daily">
+             <property name="font">
+              <font>
+               <family>游ゴシック</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>デイリー受け取り</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QCheckBox" name="Sweep">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>80</y>
+           <width>47</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>周回</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>110</y>
+           <width>285</width>
+           <height>206</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <layout class="QVBoxLayout" name="SweepOptionLayout">
+          <item>
+           <layout class="QHBoxLayout" name="targetLayout">
+            <item>
+             <widget class="QLabel" name="target">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>周回相手</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="targetComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>205</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="currentIndex">
+               <number>11</number>
+              </property>
+              <item>
+               <property name="text">
+                <string>ベルクノッカー</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>ヘイルホース</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>パイルゴーレムT</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>シェルプロテクシオン</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>ヴェイルドデスO</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>アラクネラインA</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>エグゾヴォッチャーR</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>エグゾヴォッチャーB</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>エグゾヴォッチャーY</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>エグゾヴォッチャーW</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>エグゾヴォッチャーP</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>シニスター＆レクタス・ニールW</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>アモンY</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="levelLayout">
+            <item>
+             <widget class="QLabel" name="levelLabel">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>レベル</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="levelComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>205</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Lv8</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Lv9</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Lv10</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Lv11</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Lv12</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Lv13</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="sweepTimeLayout">
+            <item>
+             <widget class="QLabel" name="sweepTime">
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>回数</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="sweepTimeComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>205</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>あるだけ</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>10</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>15</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>20</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>25</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>30</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>35</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>40</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>45</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>50</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>55</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>60</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="teamLayout">
+            <item>
+             <widget class="QLabel" name="teamLabel">
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>チーム指定</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="teamSelect">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>92</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>4</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>6</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>7</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>8</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>9</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>10</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>11</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>12</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>13</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>14</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>15</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>16</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>17</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>18</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>19</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>20</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="formerTeam">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>前回クリア部隊</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="battleLayout">
+            <item>
+             <widget class="QLabel" name="battleScript">
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>戦闘指示</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="battleInstructionSelect">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>205</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>Auto</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Default</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="resourceLayout">
+            <item>
+             <widget class="QLabel" name="resourceLabel">
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>使う資源</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="resourceComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>205</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>ライフ</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>チケット</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="refillLayout">
+            <item>
+             <widget class="QLabel" name="refillLabel">
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <property name="text">
+               <string>ライフ補填</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="refillComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>205</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>游ゴシック</family>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>ライフストン</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>予備ライフ</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>クォーツ</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>448</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="startCheckBoxLayout">
+          <item>
+           <widget class="QCheckBox" name="Login">
+            <property name="font">
+             <font>
+              <family>游ゴシック</family>
+             </font>
+            </property>
+            <property name="text">
+             <string>アカウント継承</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="LaunchApp">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <family>游ゴシック</family>
+             </font>
+            </property>
+            <property name="text">
+             <string>アプリ起動</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="SkipTrailer">
+            <property name="font">
+             <font>
+              <family>游ゴシック</family>
+             </font>
+            </property>
+            <property name="text">
+             <string>新スタイルスキップ</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="SkipGacha">
+            <property name="font">
+             <font>
+              <family>游ゴシック</family>
+             </font>
+            </property>
+            <property name="text">
+             <string>一日一回ガチャ</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>113</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="loginAccountLayout">
+          <item>
+           <widget class="QLabel" name="loginLabel">
+            <property name="text">
+             <string>継承先</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="loginComboBox"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="Battle">
+     <attribute name="title">
+      <string>戦闘指示</string>
+     </attribute>
+     <widget class="QPlainTextEdit" name="instructionEdit">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>471</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="plainText">
+       <string>T1 C1S1 TE
+T2 C1C4 C1S4 TE
+BE</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>310</y>
+        <width>258</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="bunchanLayout">
+       <item>
+        <widget class="QLabel" name="bunchanLabel">
+         <property name="text">
+          <string>豊後専用アリーナ周回</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="bunchanInput">
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="value">
+          <number>121</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bunchanButton">
+         <property name="text">
+          <string>開始</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>471</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>148</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="fileName">
+         <property name="placeholderText">
+          <string>ファイル名</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="fileComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>270</y>
+        <width>471</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="saveInfoLayout">
+       <property name="spacing">
+        <number>250</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="saveButton">
+         <property name="text">
+          <string>保存</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="infoButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>2</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>3</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>使用説明書</string>
+         </property>
+         <property name="icon">
+          <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>400</y>
+      <width>400</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="GreatButtonGroup">
+     <item>
+      <layout class="QHBoxLayout" name="ButtonGroup1">
+       <item>
+        <widget class="QPushButton" name="AllButton">
+         <property name="minimumSize">
+          <size>
+           <width>128</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>起動＋周回＋閉じる</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="SweepCloseButton">
+         <property name="minimumSize">
+          <size>
+           <width>128</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>周回＋閉じる</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="onlyCloseButton">
+         <property name="minimumSize">
+          <size>
+           <width>128</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>閉じるだけ</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="ButtonGroup2">
+       <item>
+        <widget class="QPushButton" name="StartButton">
+         <property name="minimumSize">
+          <size>
+           <width>128</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>起動だけ</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="onlyBattleButton">
+         <property name="minimumSize">
+          <size>
+           <width>128</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>戦闘だけ</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="SweepButton">
+         <property name="font">
+          <font>
+           <family>游ゴシック</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>周回だけ</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>561</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

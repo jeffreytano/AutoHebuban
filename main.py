@@ -1,6 +1,8 @@
 import sys
 from PySide6 import QtWidgets
-from ui3 import Ui_MainWindow
+from ui5 import Ui_MainWindow
+import _thread
+import threading
 
 class MainUi(QtWidgets.QMainWindow):
     def __init__(self):
@@ -9,10 +11,15 @@ class MainUi(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+
+def interrupt_function():
+    print("Interrupting the main thread...")
+    _thread.interrupt_main()
+    
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
 
     widget = MainUi()
     widget.show()
-
     sys.exit(app.exec())
