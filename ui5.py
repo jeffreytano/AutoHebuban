@@ -57,7 +57,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.taskGroup = QGroupBox(self.Task)
         self.taskGroup.setObjectName(u"taskGroup")
-        self.taskGroup.setMinimumSize(QSize(519, 270))
+        self.taskGroup.setMinimumSize(QSize(519, 250))
         self.taskGroup.setFont(font)
         self.RadioButtons = QGroupBox(self.taskGroup)
         self.RadioButtons.setObjectName(u"RadioButtons")
@@ -102,14 +102,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.Daily)
 
-        self.Sweep = QCheckBox(self.taskGroup)
-        self.Sweep.setObjectName(u"Sweep")
-        self.Sweep.setGeometry(QRect(20, 80, 47, 20))
-        self.Sweep.setFont(font)
-        self.Sweep.setChecked(True)
+        # self.Sweep = QCheckBox(self.taskGroup)
+        # self.Sweep.setObjectName(u"Sweep")
+        # self.Sweep.setGeometry(QRect(20, 80, 47, 20))
+        # self.Sweep.setFont(font)
         self.layoutWidget1 = QWidget(self.taskGroup)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(20, 110, 271, 206))
+        self.layoutWidget1.setGeometry(QRect(20, 90, 271, 206))
         self.layoutWidget1.setFont(font)
         self.SweepOptionLayout = QVBoxLayout(self.layoutWidget1)
         self.SweepOptionLayout.setObjectName(u"SweepOptionLayout")
@@ -548,18 +547,18 @@ class Ui_MainWindow(object):
         self.loginComboBox.setEnabled(False)
         self.Login.setEnabled(False) # added manually
         self.SkipTrailer.setEnabled(False) # added manually
-        self.notSkipGacha.setEnabled(False) # added manually
+        # self.notSkipGacha.setEnabled(False) # added manually
 
-        self.notSkipGacha.setChecked(True) # added manually
+        # self.notSkipGacha.setChecked(True) # added manually
 
         self.tokiAuto.setChecked(True)  # added manually
         # self.LaunchApp.setChecked(True) # added manually
         self.formerTeam.setChecked(True)
         self.Daily.setChecked(True) # added manually
         self.Weekly.setChecked(True) # added manually
-        self.Sweep.setChecked(True) # added manually
-        self.targetComboBox.setCurrentIndex(9)
-        self.levelComboBox.setCurrentIndex(3)
+        # self.Sweep.setChecked(True) # added manually
+        # self.targetComboBox.setCurrentIndex(9)
+        # self.levelComboBox.setCurrentIndex(3)
         self.loadBattleInstruction()
 
         self.loadPreset()
@@ -574,7 +573,7 @@ class Ui_MainWindow(object):
         self.doNoAuto.setText(QCoreApplication.translate("MainWindow", u"\u4f55\u3082\u3057\u306a\u3044", None))
         self.Weekly.setText(QCoreApplication.translate("MainWindow", u"\u30a6\u30a3\u30fc\u30af\u30ea\u30fc\u53d7\u3051\u53d6\u308a", None))
         self.Daily.setText(QCoreApplication.translate("MainWindow", u"\u30c7\u30a4\u30ea\u30fc\u53d7\u3051\u53d6\u308a", None))
-        self.Sweep.setText(QCoreApplication.translate("MainWindow", u"\u5468\u56de", None))
+        # self.Sweep.setText(QCoreApplication.translate("MainWindow", u"\u5468\u56de", None))
         self.target.setText(QCoreApplication.translate("MainWindow", u"\u5468\u56de\u76f8\u624b", None))
         self.targetComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"\u30d9\u30eb\u30af\u30ce\u30c3\u30ab\u30fc", None))
         self.targetComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"\u30d8\u30a4\u30eb\u30db\u30fc\u30b9", None))
@@ -705,10 +704,11 @@ class Ui_MainWindow(object):
                 a.append(cleaned_line.split(' ')[1])
 
             rewrite = [
-                self.Sweep.setChecked,
+                # self.Sweep.setChecked,
                 self.formerTeam.setChecked,
                 self.Daily.setChecked,
                 self.Weekly.setChecked,
+                self.notSkipGacha.setChecked,
                 self.targetComboBox.setCurrentIndex,
                 self.levelComboBox.setCurrentIndex,
                 self.sweepTimeComboBox.setCurrentIndex,
@@ -716,7 +716,8 @@ class Ui_MainWindow(object):
                 self.battleInstruction.setCurrentIndex,
                 self.resourceComboBox.setCurrentIndex,
                 self.refillComboBox.setCurrentIndex,
-                self.setAuto
+                self.setAuto,
+                
             ]
             
             for func, param in zip(rewrite,a):
@@ -732,10 +733,11 @@ class Ui_MainWindow(object):
 
     def savePreset(self):
         file = open('Preset.txt','w')
-        file.write('sweep: '+str(str(self.Sweep.isChecked()))+'\n')
-        file.write('former: '+str(str(self.formerTeam.isChecked()))+'\n')
-        file.write('daily: '+str(str(self.Daily.isChecked()))+'\n')
-        file.write('weekly: '+str(str(self.Weekly.isChecked()))+'\n')
+        # file.write('sweep: '+str(self.Sweep.isChecked())+'\n')
+        file.write('former: '+str(self.formerTeam.isChecked())+'\n')
+        file.write('daily: '+str(self.Daily.isChecked())+'\n')
+        file.write('weekly: '+str(self.Weekly.isChecked())+'\n')
+        file.write('notSkipDaily: '+str(self.notSkipGacha.isChecked())+'\n')
         file.write('target: '+str(self.targetComboBox.currentIndex())+'\n')
         file.write('level: '+str(self.levelComboBox.currentIndex())+'\n')
         file.write('count: '+str(self.sweepTimeComboBox.currentIndex())+'\n')
