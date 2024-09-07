@@ -8,7 +8,8 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6 import QtWidgets
+from pynput import keyboard
+from multiprocessing import Process
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
@@ -23,11 +24,13 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGroupBox,
     QSizePolicy, QSpinBox, QStatusBar, QTabWidget,
     QVBoxLayout, QWidget)
 
-from autohvbnImporter import autoHvbn
-
-autohvbn = autoHvbn()
+import autohvbnImporter 
+# import autoHvbn, battleOnly, enterBattleHandler
 
 class Ui_MainWindow(object):
+
+    process = Process()
+
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -495,7 +498,7 @@ class Ui_MainWindow(object):
         self.onlyBattleButton.setObjectName(u"onlyBattleButton")
         self.onlyBattleButton.setMinimumSize(QSize(128, 0))
         self.onlyBattleButton.setFont(font)
-        self.onlyBattleButton.clicked.connect(self.onlyBattle)
+        self.onlyBattleButton.clicked.connect(self.onlyBattleWithMonitor)
 
         self.ButtonGroup2.addWidget(self.onlyBattleButton)
 
@@ -523,12 +526,12 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
         
         self.levelComboBox.setMaxVisibleItems(6)
-        self.StartButton.clicked.connect(self.startSequence)
-        self.SweepButton.clicked.connect(self.onlySweep) # manually added
+        self.StartButton.clicked.connect(self.startSequenceWithMonitor)
+        self.SweepButton.clicked.connect(self.onlySweepWithMonitor) # manually added
         self.ButtonGroup1.addWidget(self.AllButton) # manually added
         self.targetComboBox.currentIndexChanged.connect(self.onTargetChange)
-        self.AllButton.clicked.connect(self.fullSequence)
-        self.SweepCloseButton.clicked.connect(self.sweepClose)
+        self.AllButton.clicked.connect(self.fullSequenceWithMonitor)
+        self.SweepCloseButton.clicked.connect(self.sweepCloseWithMonitor)
 
         self.loginComboBox.setEnabled(False)
         self.Login.setEnabled(False) # added manually
@@ -730,31 +733,85 @@ class Ui_MainWindow(object):
                 # self.levelComboBox.removeItem(4)
                 # self.levelComboBox.removeItem(5)
 
+    def fullSequenceWithMonitor(self):
+        self.process = Process(target=self.fullSequence)
+        self.process.start()
+        self.monitor_key_press()
+        self.process.join()
+    
     def fullSequence(self):
         print('full sequence')
-        # autohvbn.interrupt()
+        self.startSequence()
+        self.onlySweep()
+        self.onlyClose()
+
+    def sweepCloseWithMonitor(self):
+        self.process = Process(target=self.sweepClose)
+        self.process.start()
+        self.monitor_key_press()
+        self.process.join()
 
     def sweepClose(self):
         print('sweepClose')
+        self.onlySweep()
+        self.onlyClose()
     
-    def startSequence(self):
-        print('startSequence')
-        autoHvbn.launchApplication(self.notSkipGacha.isChecked())
+    def startSequenceWithMonitor(self):
+        # autoHvbn.launchApplication(self.notSkipGacha.isChecked())
+        self.process = Process(target=self.startSequence)
+        self.process.start()
+        self.monitor_key_press()
+        self.process.join()
 
-    def onlyBattle(self):
-        autoHvbn.battleOnly(self,self.battleInstruction.currentText())
+    def startSequence(self):
+        autohvbnImporter.launchApplication(self.notSkipGacha.isChecked())
+
+    def onlyBattleWithMonitor(self):
+        # autoHvbn.battleOnly(self,self.battleInstruction.currentText())
+        self.process = Process(target=autohvbnImporter.battleOnly,args=(self.battleInstruction.currentText(),))
+        self.process.start()
+        self.monitor_key_press()
+        self.process.join()
+
+    def onlyCloseWithMonitor(self):
+        self.process = Process(target=self.onlyClose)
+        self.process.start()
+        self.monitor_key_press()
+        self.process.join()
 
     def onlyClose(self):
-        autohvbn.takeReward(self.Daily.isChecked(),self.Weekly.isChecked())
+        autohvbnImporter.takeReward(self.Daily.isChecked(),self.Weekly.isChecked())
         if self.tokiAuto.isChecked:
-            autohvbn.goAutoRun()
+            autohvbnImporter.goAutoRun()
 
+    def onlySweepWithMonitor(self):
+        self.process = Process(target=self.onlySweep)
+        self.process.start()
+        self.monitor_key_press()
+        self.process.join()
+        
     def onlySweep(self):
-        autohvbn.enterBattleHandler(target=self.targetComboBox.currentIndex(),
-                                    level=self.levelComboBox.currentIndex(),
-                                    times=self.sweepTimeComboBox.currentText(),
-                                    team=self.teamSelect.currentIndex(),
-                                    former=self.formerTeam.isChecked(),
-                                    ticket=self.resourceComboBox.currentIndex(),
-                                    instruction=self.battleInstruction.currentText(),
-                                    refill=self.refillComboBox.currentIndex())
+        battleParam = [ self.targetComboBox.currentIndex(),
+                self.levelComboBox.currentIndex(),
+                self.sweepTimeComboBox.currentText(),
+                self.teamSelect.currentIndex(),
+                self.formerTeam.isChecked(),
+                self.resourceComboBox.currentIndex(),
+                self.battleInstruction.currentText(),
+                self.refillComboBox.currentIndex()
+                ]
+        autohvbnImporter.enterBattleHandler(*battleParam)
+
+    def on_press(self,key):
+        try:
+            if key == keyboard.Key.esc:
+                print('terminated')
+                self.process.terminate()
+                return False
+        except AttributeError:
+            pass
+
+    def monitor_key_press(self):
+        listener = keyboard.Listener(on_press=self.on_press)
+        listener.start()
+        listener.join()

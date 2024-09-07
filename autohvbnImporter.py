@@ -361,43 +361,81 @@ def interrupt_function():
     print("Interrupting the main thread...")
     _thread.interrupt_main()
 
-class autoHvbn:
-    def __init__(self):
-        pass
+# class autoHvbn:
+#     def __init__(self):
+#         pass
 
-    def goAutoRun(self):
-        searchButton(button1,0.7,1,True)
-        searchButton(toki,0.7,1,True)
-        wait()
-        press('down')
-        press('up')
-        press('right')
-        press('enter')
-        wait()
-        press('enter')
-        # self.clickSpecific(autoRun,0.7,1)
-        # self.clickSpecific(OKButton2,0.7,1)
-        searchButton(endGame,0.7,1)
-        wait()
-        press('right',2)
-        # searchButton(OKButton,0.7,1,True)
-        wait()
-        press('enter')
-        wait()
-        press('enter')
+def goAutoRun():
+    searchButton(button1,0.7,1,True)
+    searchButton(toki,0.7,1,True)
+    wait()
+    press('down')
+    press('up')
+    press('right')
+    press('enter')
+    wait()
+    press('enter')
+    # self.clickSpecific(autoRun,0.7,1)
+    # self.clickSpecific(OKButton2,0.7,1)
+    searchButton(endGame,0.7,1)
+    wait()
+    press('right',2)
+    # searchButton(OKButton,0.7,1,True)
+    wait()
+    press('enter')
+    wait()
+    press('enter')
 
-    def launchApplication(daily):
-        cwd = os.getcwd()
-        os.chdir(r'C:\Users\jeffr\Desktop')
-        subprocess.call('ヘブンバーンズレッド.url', shell = True)
-        os.chdir(cwd)
-        wait(5)
-        searchButton(titleMenu,confidence=0.9,retry=0.5)
-        wait(1)
-        auto.click(1000,800)
-        handleBeforeHomePage(daily)
+def launchApplication(daily):
+    cwd = os.getcwd()
+    os.chdir(r'C:\Users\jeffr\Desktop')
+    subprocess.call('ヘブンバーンズレッド.url', shell = True)
+    os.chdir(cwd)
+    wait(5)
+    searchButton(titleMenu,confidence=0.9,retry=0.5)
+    wait(1)
+    auto.click(1000,800)
+    handleBeforeHomePage(daily)
 
-    def enterBattleHandler(self,target,level,times,team=0,former=False,ticket=False,instruction = 'auto', refill = 0):
+def takeReward(daily,weekly):
+    print(daily,weekly)
+    if daily or weekly:
+        searchButton(button1,0.7,1)
+        searchButton(missionButton,0.7,1,True)
+        if daily:
+            reward = searchButton(takeReward,0.8)
+            disabled = searchButton(takeRewardDisabled,0.8)
+            while not (reward or disabled):
+                print(reward, disabled, reward or disabled)
+                reward = searchButton(takeReward,0.8)
+                disabled = searchButton(takeRewardDisabled,0.8)
+            if reward:
+                auto.click(reward)
+                wait(1)
+                searchButton(OKButton,0.7,1,True)
+                wait(1)
+        if weekly:
+            wait(1)
+            searchButton(weeklyButton,0.7,1,True)
+            reward = searchButton(takeReward,0.8)
+            disabled = searchButton(takeRewardDisabled,0.8)
+            while not (reward or disabled):
+                print(reward, disabled, reward or disabled)
+                reward = searchButton(takeReward,0.8)
+                disabled = searchButton(takeRewardDisabled,0.8)
+            if reward:
+                wait(1)
+                auto.click(reward)
+                wait(1)
+                searchButton(OKButton,0.7,1,True)
+                wait(1)
+        searchButton(backButton,0.7,1,True)
+
+def battleOnly(txt):
+    battleInstruction(txt)
+
+def enterBattleHandler(target,level,times,team=0,former=False,ticket=False,instruction = 'auto', refill = 0):
+        print('enterBattleHandler')
         counter = 0
         if times == 'All':
             useLife = -1
@@ -455,43 +493,3 @@ class autoHvbn:
                 pos = searchButton(homeButton,0.9)
             auto.click(pos)
             searchButton(OKButton,0.7,1,clickit=True)
-
-    def interrupt(self):
-        interrupt_function()
-
-    def takeReward(self,daily,weekly):
-        print(daily,weekly)
-        if daily or weekly:
-            searchButton(button1,0.7,1)
-            searchButton(missionButton,0.7,1,True)
-            if daily:
-                reward = searchButton(takeReward,0.8)
-                disabled = searchButton(takeRewardDisabled,0.8)
-                while not (reward or disabled):
-                    print(reward, disabled, reward or disabled)
-                    reward = searchButton(takeReward,0.8)
-                    disabled = searchButton(takeRewardDisabled,0.8)
-                if reward:
-                    auto.click(reward)
-                    wait(1)
-                    searchButton(OKButton,0.7,1,True)
-                    wait(1)
-            if weekly:
-                wait(1)
-                searchButton(weeklyButton,0.7,1,True)
-                reward = searchButton(takeReward,0.8)
-                disabled = searchButton(takeRewardDisabled,0.8)
-                while not (reward or disabled):
-                    print(reward, disabled, reward or disabled)
-                    reward = searchButton(takeReward,0.8)
-                    disabled = searchButton(takeRewardDisabled,0.8)
-                if reward:
-                    wait(1)
-                    auto.click(reward)
-                    wait(1)
-                    searchButton(OKButton,0.7,1,True)
-                    wait(1)
-            searchButton(backButton,0.7,1,True)
-
-    def battleOnly(self,txt):
-        battleInstruction(txt)
