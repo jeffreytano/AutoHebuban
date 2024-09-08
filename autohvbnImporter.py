@@ -46,6 +46,9 @@ arenaForm = 'arenaForm.png'
 dialogAutoOff = 'dialogAutoOff.png'
 menu = 'menu.png'
 terminate = 'terminate.png'
+resourceLife = 'resourceLife.png'
+orbBossTicket = 'orbBossTicket.png'
+jewelTicket = 'jewelTicket.png'
 detailPos = [[1521,366],[1517,529],[1523,690],[1631,856],[1526,473],[1513,640],[1535,813]]
 BattleChar = [[168,882],[457,884],[747,879],[1017,887],[1256,884],[1501,874]]
 SkillSlot = [[1108,260],[1129,431],[1117,634],[1137,740]]
@@ -228,7 +231,11 @@ def enterOrbBoss2(level,useLife,ticket,refill,team,former):
         # searchButton(OKButton,0.7,1,True)
         press('enter')
     if ticket:
-        press('q')
+        wait()
+        searchButton(orbBossTicket,0.8,1,True)
+    else:
+        wait() 
+        searchButton(resourceLife,0.8,1,True)
     if 0<useLife< 5:
         wait()
         press('d',useLife-1)
@@ -328,7 +335,11 @@ def enterJewel(Color,level,useLife,ticket,refill,team,former):
 
     searchButton(battleButton,0.7,1,True)
     if ticket:
-        press('q')
+        wait()
+        searchButton(jewelTicket,0.8,1,True)
+    else:
+        wait() 
+        searchButton(resourceLife,0.8,1,True)
     if 0<useLife< 5:
         wait()
         press('d',useLife-1)
