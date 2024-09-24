@@ -1,3 +1,4 @@
 BattlePreset1
 test
-subacArakunerai
+subacArakuneraiBattlePreset1
+arakune

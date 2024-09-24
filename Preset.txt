@@ -1,6 +1,6 @@
 former: False
 daily: True
-weekly: False
+weekly: True
 notSkipDaily: True
 target: 10
 level: 3
