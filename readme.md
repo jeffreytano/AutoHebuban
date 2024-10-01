@@ -13,7 +13,7 @@ There are 6 buttons in the bottom of the UI
 5. Battle only - Only execute the battle script specified in the option (Scripts can be defined in the second tab).
 6. Spend stamina only - Only spend stamina on the specified stage and stay in the home screen.
 
-![UI](images/ui.png)
+![UI](images/UIdemo.png)
 
 ### Options
 
